@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arcadi Llanza Carmona | Researcher &amp; Data Scientist</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Invariant tokens */
+    :root {
+      --accent:  #5b8dee;
+      --accent2: #7c5cbf;
+      --radius:  12px;
+      --font:    'Inter', 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* Dark (explicit or fallback) */
+    :root, html[data-theme="dark"] {
+      --bg:      #0f1117;
+      --surface: #1a1d27;
+      --surface2:#22263a;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+      --border:  #2e3350;
+      --nav-bg:  rgba(15,17,23,.88);
+    }
+
+    /* Light */
+    html[data-theme="light"] {
+      --bg:      #f8fafc;
+      --surface: #ffffff;
+      --surface2:#f1f5f9;
+      --text:    #0f172a;
+      --muted:   #64748b;
+      --border:  #e2e8f0;
+      --nav-bg:  rgba(248,250,252,.92);
+    }
+
+    /* Auto: follow system */
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme]) {
+        --bg:#f8fafc; --surface:#ffffff; --surface2:#f1f5f9;
+        --text:#0f172a; --muted:#64748b; --border:#e2e8f0;
+        --nav-bg:rgba(248,250,252,.92);
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme]) {
+        --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a;
+        --text:#e2e8f0; --muted:#94a3b8; --border:#2e3350;
+        --nav-bg:rgba(15,17,23,.88);
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); line-height: 1.7; font-size: 16px;
+      transition: background .25s, color .25s;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+    h1 { font-size: clamp(2rem,5vw,3.2rem); font-weight:700; line-height:1.15; }
+    h2 { font-size:1.5rem; font-weight:700; color:var(--accent); margin-bottom:32px; letter-spacing:.02em; text-transform:uppercase; }
+    h3 { font-size:1.05rem; font-weight:600; color:var(--text); }
+    p  { color:var(--muted); }
+
+    /* Nav */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      background:var(--nav-bg); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border); transition:background .25s, border-color .25s;
+    }
+    .nav-inner {
+      max-width:960px; margin:0 auto; padding:0 24px;
+      height:60px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .nav-logo { font-weight:700; font-size:1rem; color:var(--text); letter-spacing:.02em; }
+    .nav-right { display:flex; align-items:center; gap:16px; }
+    .nav-links { display:flex; gap:22px; }
+    .nav-links a { color:var(--muted); font-size:.88rem; transition:color .2s; }
+    .nav-links a:hover { color:var(--text); text-decoration:none; }
+
+    /* Language dropdown */
+    .lang-dropdown { position:relative; }
+    .lang-trigger {
+      display:inline-flex; align-items:center; gap:6px;
+      background:var(--surface); border:1px solid var(--border); border-radius:20px;
+      padding:5px 12px 5px 10px; cursor:pointer;
+      font-size:.78rem; font-weight:700; letter-spacing:.05em; color:var(--text);
+      transition:border-color .2s, background .25s; white-space:nowrap;
+    }
+    .lang-trigger:hover { border-color:var(--accent); }
+    .lang-trigger .caret {
+      font-size:.6rem; color:var(--muted); margin-left:2px;
+      transition:transform .2s;
+    }
+    .lang-dropdown.open .caret { transform:rotate(180deg); }
+    .lang-menu {
+      display:none; position:absolute; right:0; top:calc(100% + 6px);
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:10px; overflow:hidden; min-width:120px;
+      box-shadow:0 8px 24px rgba(0,0,0,.18); z-index:200;
+    }
+    .lang-dropdown.open .lang-menu { display:block; }
+    .lang-opt {
+      display:flex; align-items:center; gap:8px;
+      padding:9px 14px; cursor:pointer;
+      font-size:.82rem; font-weight:600; color:var(--muted);
+      transition:background .15s, color .15s; border:none; background:transparent; width:100%; text-align:left;
+    }
+    .lang-opt:hover { background:var(--surface2); color:var(--text); }
+    .lang-opt.active { color:var(--accent); background:var(--surface2); }
+    .lang-opt .flag { font-size:1rem; }
+
+    /* Theme toggle */
+    .theme-btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:34px; height:34px; background:var(--surface);
+      border:1px solid var(--border); border-radius:50%;
+      cursor:pointer; font-size:1rem; transition:border-color .2s, background .25s;
+      flex-shrink:0;
+    }
+    .theme-btn:hover { border-color:var(--accent); }
+
+    /* Hero */
+    #hero { padding-top:140px; padding-bottom:80px; border-bottom:1px solid var(--border); }
+    .hero-grid { display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center; }
+    .hero-eyebrow {
+      font-size:.85rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--accent); margin-bottom:16px;
+    }
+    .hero-name { color:var(--text); margin-bottom:8px; }
+    .hero-title { font-size:1.15rem; color:var(--muted); margin-bottom:24px; font-weight:400; }
+    .hero-desc  { color:var(--muted); max-width:600px; margin-bottom:32px; }
+    .hero-links { display:flex; flex-wrap:wrap; gap:12px; }
+
+    .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 20px; border-radius:8px; font-size:.875rem; font-weight:600;
+      transition:opacity .2s, transform .15s;
+    }
+    .btn:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
+    .btn-primary { background:var(--accent); color:#fff; }
+    .btn-ghost   { background:transparent; color:var(--muted); border:1px solid var(--border); }
+    .btn-ghost:hover { color:var(--text); border-color:var(--accent); }
+
+    .avatar {
+      width:210px; height:210px; border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex; align-items:center; justify-content:center;
+      font-size:3.5rem; font-weight:700; color:#fff;
+      flex-shrink:0; letter-spacing:-.02em;
+      box-shadow:0 0 0 4px var(--surface),0 0 0 6px var(--border);
+    }
+
+    /* About */
+    #about .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+    .about-text p+p { margin-top:16px; }
+    .card-list { display:flex; flex-direction:column; gap:14px; }
+    .info-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      padding:16px 20px; display:flex; align-items:flex-start; gap:14px;
+    }
+    .info-icon {
+      width:40px; height:40px; border-radius:8px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.1rem; flex-shrink:0;
+    }
+    .info-card h3 { font-size:.9rem; margin-bottom:2px; }
+    .info-card p  { font-size:.85rem; }
+
+    /* Research */
+    .tags { display:flex; flex-wrap:wrap; gap:10px; }
+    .tag {
+      background:var(--surface2); border:1px solid var(--border);
+      border-radius:20px; padding:6px 14px; font-size:.82rem; color:var(--muted);
+      transition:border-color .2s, color .2s;
+    }
+    .tag:hover { border-color:var(--accent); color:var(--text); }
+    .research-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; margin-top:32px; }
+    .research-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      padding:24px; transition:border-color .2s, transform .2s;
+    }
+    .research-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .research-card-icon { font-size:2rem; margin-bottom:14px; }
+    .research-card h3 { font-size:1rem; margin-bottom:8px; }
+    .research-card p  { font-size:.875rem; }
+
+    /* Timeline */
+    .timeline { position:relative; padding-left:28px; }
+    .timeline::before {
+      content:''; position:absolute; left:7px; top:0; bottom:0;
+      width:2px; background:var(--border);
+    }
+    .timeline-item  { position:relative; margin-bottom:36px; }
+    .timeline-item:last-child { margin-bottom:0; }
+    .timeline-dot {
+      position:absolute; left:-28px; top:4px;
+      width:16px; height:16px; border-radius:50%;
+      background:var(--accent); border:3px solid var(--bg);
+      box-shadow:0 0 0 2px var(--accent);
+    }
+    .timeline-year  { font-size:.78rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:4px; }
+    .timeline-title { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .timeline-sub   { font-size:.9rem; color:var(--muted); margin-bottom:6px; }
+    .timeline-desc  { font-size:.875rem; color:var(--muted); }
+
+    /* Languages section */
+    .lang-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(185px,1fr)); gap:14px; }
+    .lang-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      padding:18px 20px; text-align:center;
+    }
+    .lang-flag  { margin-bottom:10px; line-height:0; }
+    .lang-name  { font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:3px; }
+    .lang-level { font-size:.75rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; }
+    .level-native { color:#4ade80; }
+    .level-c1     { color:var(--accent); }
+    .level-b1     { color:#fb923c; }
+    .level-a2     { color:var(--muted); }
+    .lang-bar { height:4px; background:var(--border); border-radius:2px; margin-top:10px; overflow:hidden; }
+    .lang-bar-fill { height:100%; border-radius:2px; }
+
+    /* Publications */
+    .pub-filters { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px; }
+    .pub-filter {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:20px; padding:6px 16px; font-size:.82rem; color:var(--muted);
+      cursor:pointer; transition:all .2s; user-select:none;
+    }
+    .pub-filter.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .pub-filter:hover:not(.active) { border-color:var(--accent); color:var(--text); }
+    .pub-list { display:flex; flex-direction:column; gap:16px; }
+    .pub-item {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      padding:20px 24px; transition:border-color .2s;
+    }
+    .pub-item:hover { border-color:var(--accent); }
+    .pub-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:8px; }
+    .pub-title  { font-size:.95rem; font-weight:600; color:var(--text); flex:1; }
+    .pub-badge  {
+      flex-shrink:0; font-size:.72rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.06em; padding:3px 10px; border-radius:20px;
+    }
+    .badge-journal  { background:rgba(91,141,238,.18);  color:var(--accent); border:1px solid rgba(91,141,238,.35); }
+    .badge-conf     { background:rgba(124,92,191,.18); color:#a78bfa;       border:1px solid rgba(124,92,191,.35); }
+    .badge-thesis   { background:rgba(34,197,94,.15);  color:#4ade80;       border:1px solid rgba(34,197,94,.3); }
+    .badge-preprint { background:rgba(249,115,22,.15); color:#fb923c;       border:1px solid rgba(249,115,22,.3); }
+    .pub-meta    { font-size:.82rem; color:var(--muted); }
+    .pub-authors { font-size:.82rem; color:var(--muted); margin-top:4px; font-style:italic; }
+    .pub-authors strong { color:var(--text); font-style:normal; }
+
+    /* Connect */
+    .links-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; }
+    .link-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      padding:20px; display:flex; align-items:center; gap:14px;
+      text-decoration:none; transition:border-color .2s, transform .2s;
+    }
+    .link-card:hover { border-color:var(--accent); transform:translateY(-2px); text-decoration:none; }
+    .link-logo { width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .link-logo svg { width:36px; height:36px; }
+    .link-logo-emoji { font-size:1.9rem; }
+    .link-card-info span { display:block; }
+    .link-card-info .label { font-size:.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+    .link-card-info .value { font-size:.92rem; font-weight:600; color:var(--text); }
+
+    /* Footer */
+    footer {
+      text-align:center; padding:40px 24px;
+      font-size:.82rem; color:var(--muted); border-top:1px solid var(--border);
+    }
+
+    /* Responsive */
+    @media (max-width:700px) {
+      .hero-grid { grid-template-columns:1fr; }
+      .avatar    { width:130px; height:130px; font-size:2rem; }
+      #about .about-grid { grid-template-columns:1fr; }
+      .nav-links { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">A. Llanza Carmona</span>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#about"        data-i18n="nav_about">About</a>
+        <a href="#research"     data-i18n="nav_research">Research</a>
+        <a href="#experience"   data-i18n="nav_experience">Experience</a>
+        <a href="#publications" data-i18n="nav_publications">Publications</a>
+        <a href="#connect"      data-i18n="nav_connect">Connect</a>
+      </div>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <span id="themeIcon">🌙</span>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false">
+          <span id="langFlag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#012169"/><line x1="0" y1="0" x2="5" y2="3" stroke="#fff" stroke-width=".6"/><line x1="5" y1="0" x2="0" y2="3" stroke="#fff" stroke-width=".6"/><line x1="0" y1="0" x2="5" y2="3" stroke="#C8102E" stroke-width=".3"/><line x1="5" y1="0" x2="0" y2="3" stroke="#C8102E" stroke-width=".3"/><rect x="2" y="0" width="1" height="3" fill="#fff"/><rect x="0" y="1" width="5" height="1" fill="#fff"/><rect x="2.2" y="0" width=".6" height="3" fill="#C8102E"/><rect x="0" y="1.2" width="5" height=".6" fill="#C8102E"/></svg></span>
+          <span id="langCode">EN</span>
+          <span class="caret">▼</span>
+        </button>
+        <div class="lang-menu" role="menu">
+          <button class="lang-opt active" data-lang="en" role="menuitem"><span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#012169"/><line x1="0" y1="0" x2="5" y2="3" stroke="#fff" stroke-width=".6"/><line x1="5" y1="0" x2="0" y2="3" stroke="#fff" stroke-width=".6"/><line x1="0" y1="0" x2="5" y2="3" stroke="#C8102E" stroke-width=".3"/><line x1="5" y1="0" x2="0" y2="3" stroke="#C8102E" stroke-width=".3"/><rect x="2" y="0" width="1" height="3" fill="#fff"/><rect x="0" y="1" width="5" height="1" fill="#fff"/><rect x="2.2" y="0" width=".6" height="3" fill="#C8102E"/><rect x="0" y="1.2" width="5" height=".6" fill="#C8102E"/></svg></span> EN</button>
+          <button class="lang-opt"        data-lang="es" role="menuitem"><span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#AA151B"/><rect y=".75" width="5" height="1.5" fill="#F1BF00"/></svg></span> ES</button>
+          <button class="lang-opt"        data-lang="ca" role="menuitem"><span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#FCDD09"/><rect y=".375" width="5" height=".375" fill="#DA121A"/><rect y="1.125" width="5" height=".375" fill="#DA121A"/><rect y="1.875" width="5" height=".375" fill="#DA121A"/><rect y="2.625" width="5" height=".375" fill="#DA121A"/></svg></span> CA</button>
+          <button class="lang-opt"        data-lang="fr" role="menuitem"><span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#002395"/><rect x="1.667" width="1.666" height="3" fill="#fff"/><rect x="3.333" width="1.667" height="3" fill="#ED2939"/></svg></span> FR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow" data-i18n="hero_eyebrow">Researcher &amp; Data Scientist</div>
+        <h1 class="hero-name">Arcadi Llanza<br>Carmona</h1>
+        <p class="hero-title" data-i18n="hero_title">Data Scientist · VINCI &nbsp;|&nbsp; PhD · Universite Paris-Est Creteil</p>
+        <p class="hero-desc" data-i18n="hero_desc">
+          Researcher specialising in metaheuristic optimisation, deep learning, and computer vision.
+          My work spans fractal-decomposition algorithms, neural-network compression, image anonymisation,
+          and intelligent transport systems, from fundamental theory to industrial applications.
+        </p>
+        <div class="hero-links">
+          <a class="btn btn-primary" href="#publications" data-i18n="hero_btn_pub">Publications</a>
+          <a class="btn btn-ghost" href="https://fr.linkedin.com/in/arcadillanzacarmona" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" href="https://orcid.org/0000-0001-5928-3189"              target="_blank" rel="noopener">ORCID</a>
+          <a class="btn btn-ghost" href="https://scholar.google.com/citations?user=ck1JtTYAAAAJ&hl=en&authuser=1" target="_blank" rel="noopener">Google Scholar</a>
+        </div>
+      </div>
+      <div class="avatar"><img src="photo.jpg" alt="Arcadi Llanza Carmona" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <h2 data-i18n="sec_about">About</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p data-i18n-html="about_p1">
+          I am a Data Scientist at <strong>VINCI</strong> (France) and a researcher affiliated with the
+          <strong>Laboratoire Images, Signaux et Syst&egrave;mes Intelligents (LISSI)</strong> at
+          Universite Paris-Est Creteil Val-de-Marne (UPEC). In 2024 I obtained my PhD,
+          titled <em>"Conception de methodes d'optimisation basees sur la decomposition fractale.
+          Application a la vision par ordinateur"</em>, under the supervision of Nadiya Shvai and Amir Nakib.
+        </p>
+        <p data-i18n-html="about_p2">
+          My academic journey began at the <strong>Universitat Autonoma de Barcelona (UAB)</strong>,
+          where I earned a Master's degree in Computer Vision and was a researcher at the
+          <strong>Computer Vision Centre (CVC)</strong>. Early work focused on eye-tracking systems
+          using natural-light webcams, achieving a 34% reduction in gaze-estimation error over baseline methods.
+        </p>
+        <p data-i18n-html="about_p3">
+          My research now centres on the <strong>Fractal Decomposition Algorithm (FDA)</strong>,
+          a deterministic metaheuristic that recursively subdivides search spaces using geometric hyperspheres,
+          and its applications to dynamic optimisation, neural-architecture search, model compression,
+          and real-world computer-vision tasks.
+        </p>
+      </div>
+      <div class="card-list">
+        <div class="info-card">
+          <div class="info-icon">🏢</div>
+          <div>
+            <h3 data-i18n="about_pos_label">Current Position</h3>
+            <p data-i18n="about_pos_val">Data Scientist, VINCI, France</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🎓</div>
+          <div>
+            <h3 data-i18n="about_phd_label">PhD (2020-2024)</h3>
+            <p>Universite Paris-Est Creteil Val-de-Marne (UPEC)</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🔬</div>
+          <div>
+            <h3 data-i18n="about_lab_label">Lab Affiliation</h3>
+            <p>Laboratoire Images, Signaux et Syst&egrave;mes Intelligents (LISSI)</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">🌍</div>
+          <div>
+            <h3 data-i18n="about_loc_label">Location</h3>
+            <p>Paris, France</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Research -->
+<section id="research">
+  <div class="container">
+    <h2 data-i18n="sec_research">Research Interests</h2>
+    <div class="tags">
+      <span class="tag" data-i18n="tag1">Metaheuristic Optimisation</span>
+      <span class="tag" data-i18n="tag2">Fractal Decomposition Algorithm</span>
+      <span class="tag" data-i18n="tag3">Deep Learning</span>
+      <span class="tag" data-i18n="tag4">Neural Architecture Search</span>
+      <span class="tag" data-i18n="tag5">Model Compression</span>
+      <span class="tag" data-i18n="tag6">Computer Vision</span>
+      <span class="tag" data-i18n="tag7">Semantic Segmentation</span>
+      <span class="tag" data-i18n="tag8">Image Anonymisation</span>
+      <span class="tag" data-i18n="tag9">Gaze Estimation</span>
+      <span class="tag" data-i18n="tag10">Autonomous Driving</span>
+      <span class="tag" data-i18n="tag11">Intelligent Transport Systems</span>
+      <span class="tag" data-i18n="tag12">Dynamic Optimisation</span>
+      <span class="tag" data-i18n="tag13">Data Distillation</span>
+      <span class="tag" data-i18n="tag14">Vision Transformers</span>
+      <span class="tag" data-i18n="tag15">Evolutionary Computation</span>
+    </div>
+    <div class="research-cards">
+      <div class="research-card">
+        <div class="research-card-icon">🌀</div>
+        <h3 data-i18n="rc1_title">Fractal Decomposition Algorithm</h3>
+        <p  data-i18n="rc1_desc">Design and analysis of FDA, a deterministic metaheuristic that builds a search tree by recursively partitioning continuous solution spaces via geometric hyperspheres, applicable to large-scale and dynamic optimisation.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-card-icon">🧠</div>
+        <h3 data-i18n="rc2_title">Deep Learning Optimisation</h3>
+        <p  data-i18n="rc2_desc">Neural-architecture search, hyperparameter optimisation, and model compression (pruning, quantisation) driven by evolutionary and fractal-based algorithms to deploy efficient models under resource constraints.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-card-icon">👁️</div>
+        <h3 data-i18n="rc3_title">Computer Vision Applications</h3>
+        <p  data-i18n="rc3_desc">Semantic segmentation for tunnel roads, license plate recognition, urban traffic management, adaptive image anonymisation, and lightweight transformer architectures for edge deployment.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-card-icon">🛡️</div>
+        <h3 data-i18n="rc4_title">Privacy and Anonymisation</h3>
+        <p  data-i18n="rc4_desc">Adaptive image anonymisation methods that balance privacy preservation with utility for downstream classification tasks, using black-box and evolutionary optimisation strategies.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-card-icon">🚗</div>
+        <h3 data-i18n="rc5_title">Intelligent Transport Systems</h3>
+        <p  data-i18n="rc5_desc">Real-time CNN-based traffic management, automatic toll collection, camera alignment optimisation, and road infrastructure analysis using state-of-the-art deep learning models.</p>
+      </div>
+      <div class="research-card">
+        <div class="research-card-icon">🔭</div>
+        <h3 data-i18n="rc6_title">Gaze Estimation and HCI</h3>
+        <p  data-i18n="rc6_desc">Feature-based gaze estimation using natural-light webcams for multi-display systems, enabling low-cost human-computer interaction without specialised hardware.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience and Education -->
+<section id="experience">
+  <div class="container">
+    <h2 data-i18n="sec_experience">Experience and Education</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+
+      <!-- Work -->
+      <div>
+        <h3 style="margin-bottom:24px;color:var(--muted);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;"
+            data-i18n="work_label">Work Experience</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year"  data-i18n="exp1_year">2017 - Present</div>
+            <div class="timeline-title" data-i18n="exp1_title">Data Scientist</div>
+            <div class="timeline-sub"   data-i18n="exp1_sub">Cyclope (VINCI), Paris, France</div>
+            <div class="timeline-desc"  data-i18n="exp1_desc">Development of computer vision software for license plate detection and reading (YOLO v2 and v3), road semantic segmentation, and automatic incident detection from tunnel camera streams.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year"  data-i18n="exp2_year">2016 - 2017</div>
+            <div class="timeline-title" data-i18n="exp2_title">CTO and Co-Founder</div>
+            <div class="timeline-sub"   data-i18n="exp2_sub">RETAILQuant, Munich, Germany</div>
+            <div class="timeline-desc"  data-i18n="exp2_desc">Founded and led the technology of a computer vision startup for detecting and classifying demographics (gender, age, emotions, ethnicity) from faces. Awarded 125,000 EUR by the German government EXIST programme.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year"  data-i18n="exp3_year">2014 - 2016</div>
+            <div class="timeline-title" data-i18n="exp3_title">Research Intern</div>
+            <div class="timeline-sub"   data-i18n="exp3_sub">Computer Vision Centre (CVC), UAB, Barcelona</div>
+            <div class="timeline-desc"  data-i18n="exp3_desc">Research and development of eye-tracking software using natural-light webcams. Published paper at ibPRIA 2015: novel gaze-estimation algorithm reducing horizontal error by 34% over baseline.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div>
+        <h3 style="margin-bottom:24px;color:var(--muted);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;"
+            data-i18n="edu_label">Education</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:var(--accent2);box-shadow:0 0 0 2px var(--accent2);"></div>
+            <div class="timeline-year"  data-i18n="edu1_year">2020 - 2024</div>
+            <div class="timeline-title" data-i18n="edu1_title">PhD in Optimisation and Computer Vision</div>
+            <div class="timeline-sub"   data-i18n="edu1_sub">Universite Paris-Est Creteil Val-de-Marne (UPEC)</div>
+            <div class="timeline-desc"  data-i18n="edu1_desc">Thesis: "Conception de methodes d'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur." Supervised by Nadiya Shvai and Amir Nakib.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:var(--accent2);box-shadow:0 0 0 2px var(--accent2);"></div>
+            <div class="timeline-year"  data-i18n="edu2_year">2015 - 2016</div>
+            <div class="timeline-title" data-i18n="edu2_title">Master's in Computer Vision</div>
+            <div class="timeline-sub"   data-i18n="edu2_sub">Universitat Autonoma de Barcelona (UAB)</div>
+            <div class="timeline-desc"  data-i18n="edu2_desc">GPA: 8.04/10. Specialised programme covering image processing, machine learning, 3D vision, and visual tracking. Dissertation on fashion-item recommendation via neural networks.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:var(--accent2);box-shadow:0 0 0 2px var(--accent2);"></div>
+            <div class="timeline-year"  data-i18n="edu3_year">2011 - 2015</div>
+            <div class="timeline-title" data-i18n="edu3_title">BSc in Computer Science</div>
+            <div class="timeline-sub"   data-i18n="edu3_sub">Universitat Autonoma de Barcelona (UAB)</div>
+            <div class="timeline-desc"  data-i18n="edu3_desc">GPA: 7.14/10. Final degree project at the Computer Vision Centre: eye tracking configuration based on a webcam and implementation of a novel gaze estimation algorithm.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Languages -->
+<section id="languages">
+  <div class="container">
+    <h2 data-i18n="sec_languages">Languages</h2>
+    <div class="lang-grid">
+      <div class="lang-card">
+        <div class="lang-flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="36" height="22" style="border-radius:3px;display:block;margin:0 auto;"><rect width="5" height="3" fill="#AA151B"/><rect y=".75" width="5" height="1.5" fill="#F1BF00"/></svg></div>
+        <div class="lang-name"  data-i18n="lang_spanish">Spanish</div>
+        <div class="lang-level level-native" data-i18n="lang_native">Native</div>
+        <div class="lang-bar"><div class="lang-bar-fill" style="width:100%;background:#4ade80;"></div></div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="36" height="22" style="border-radius:3px;display:block;margin:0 auto;"><rect width="5" height="3" fill="#FCDD09"/><rect y=".375" width="5" height=".375" fill="#DA121A"/><rect y="1.125" width="5" height=".375" fill="#DA121A"/><rect y="1.875" width="5" height=".375" fill="#DA121A"/><rect y="2.625" width="5" height=".375" fill="#DA121A"/></svg></div>
+        <div class="lang-name"  data-i18n="lang_catalan">Catalan</div>
+        <div class="lang-level level-native" data-i18n="lang_native">Native</div>
+        <div class="lang-bar"><div class="lang-bar-fill" style="width:100%;background:#4ade80;"></div></div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="36" height="22" style="border-radius:3px;display:block;margin:0 auto;"><rect width="5" height="3" fill="#012169"/><line x1="0" y1="0" x2="5" y2="3" stroke="#fff" stroke-width=".6"/><line x1="5" y1="0" x2="0" y2="3" stroke="#fff" stroke-width=".6"/><line x1="0" y1="0" x2="5" y2="3" stroke="#C8102E" stroke-width=".3"/><line x1="5" y1="0" x2="0" y2="3" stroke="#C8102E" stroke-width=".3"/><rect x="2" y="0" width="1" height="3" fill="#fff"/><rect x="0" y="1" width="5" height="1" fill="#fff"/><rect x="2.2" y="0" width=".6" height="3" fill="#C8102E"/><rect x="0" y="1.2" width="5" height=".6" fill="#C8102E"/></svg></div>
+        <div class="lang-name"  data-i18n="lang_english">English</div>
+        <div class="lang-level level-c1" data-i18n="lang_c1">Proficient (C1)</div>
+        <div class="lang-bar"><div class="lang-bar-fill" style="width:83%;background:var(--accent);"></div></div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="36" height="22" style="border-radius:3px;display:block;margin:0 auto;"><rect width="5" height="3" fill="#002395"/><rect x="1.667" width="1.666" height="3" fill="#fff"/><rect x="3.333" width="1.667" height="3" fill="#ED2939"/></svg></div>
+        <div class="lang-name"  data-i18n="lang_french">French</div>
+        <div class="lang-level level-b1" data-i18n="lang_b2">Independent (B2)</div>
+        <div class="lang-bar"><div class="lang-bar-fill" style="width:67%;background:#fb923c;"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Publications -->
+<section id="publications">
+  <div class="container">
+    <h2 data-i18n="sec_publications">Publications</h2>
+    <div class="pub-filters">
+      <button class="pub-filter active" data-filter="recent"     data-i18n="filter_recent">5 Most Recent</button>
+      <button class="pub-filter"        data-filter="journal"    data-i18n="filter_journal">Journal</button>
+      <button class="pub-filter"        data-filter="conference" data-i18n="filter_conf">Conference</button>
+      <button class="pub-filter"        data-filter="thesis"     data-i18n="filter_thesis">PhD Thesis</button>
+      <button class="pub-filter"        data-filter="preprint"   data-i18n="filter_preprint">Preprint</button>
+    </div>
+    <div class="pub-list" id="pubList"></div>
+    <div style="text-align:center;margin-top:24px;">
+      <button id="pubExpandBtn" style="
+        background:transparent; border:1px solid var(--border); border-radius:20px;
+        color:var(--muted); font-size:.85rem; font-weight:600; padding:8px 22px;
+        cursor:pointer; transition:border-color .2s, color .2s; display:none;
+      " data-i18n="pub_expand">&#43; Show all publications</button>
+    </div>
+  </div>
+</section>
+
+<!-- Connect -->
+<section id="connect">
+  <div class="container">
+    <h2 data-i18n="sec_connect">Connect</h2>
+    <p style="margin-bottom:32px;" data-i18n="connect_desc">Find me on the following platforms or explore related projects.</p>
+    <div class="links-grid">
+
+      <!-- LinkedIn -->
+      <a class="link-card" href="https://fr.linkedin.com/in/arcadillanzacarmona" target="_blank" rel="noopener">
+        <div class="link-logo">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+            <path fill="#fff" d="M7.1 9.3H4.4V19.2H7.1V9.3Z"/>
+            <circle fill="#fff" cx="5.75" cy="6.65" r="1.6"/>
+            <path fill="#fff" d="M13.1 14c0-1.3.6-2.1 1.8-2.1 1.1 0 1.6.8 1.6 2.1v5.2h2.65v-5.8c0-2.4-1.3-4.3-3.7-4.3-1.3 0-2.3.6-2.85 1.55V9.3h-2.55v9.9H13.1V14Z"/>
+          </svg>
+        </div>
+        <div class="link-card-info">
+          <span class="label" data-i18n="link_li_label">Professional</span>
+          <span class="value">LinkedIn</span>
+        </div>
+      </a>
+
+      <!-- ORCID -->
+      <a class="link-card" href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">
+        <div class="link-logo">
+          <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="128" cy="128" r="128" fill="#A6CE39"/>
+            <path fill="#fff" d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.7-13.4-39.7-43.7-39.7h-23.7v79.4zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.5 10.1 10.1z"/>
+          </svg>
+        </div>
+        <div class="link-card-info">
+          <span class="label" data-i18n="link_orcid_label">Research ID</span>
+          <span class="value">ORCID</span>
+        </div>
+      </a>
+
+      <!-- Google Scholar -->
+      <a class="link-card" href="https://scholar.google.com/citations?user=ck1JtTYAAAAJ&hl=en&authuser=1" target="_blank" rel="noopener">
+        <div class="link-logo">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L1 8.5l11 6.5 11-6.5L12 2z" fill="#4285F4"/>
+            <path d="M1 8.5v7L12 22l11-6.5v-7L12 15 1 8.5z" fill="#4285F4" opacity=".7"/>
+            <path d="M20 8v8l1.5-.9V7.1L20 8z" fill="#34A853"/>
+            <circle cx="21" cy="17" r="2" fill="#FBBC05"/>
+          </svg>
+        </div>
+        <div class="link-card-info">
+          <span class="label" data-i18n="link_gs_label">Citations</span>
+          <span class="value">Google Scholar</span>
+        </div>
+      </a>
+
+      <!-- MPB -->
+      <a class="link-card" href="https://alc1218.github.io/MPB/" target="_blank" rel="noopener">
+        <div class="link-logo"><span class="link-logo-emoji">🌐</span></div>
+        <div class="link-card-info">
+          <span class="label" data-i18n="link_mpb_label">Project</span>
+          <span class="value">MPB</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p data-i18n-html="footer_text">
+    &copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp;
+    <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>
+  </p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ─── Publication data ─── */
+  var PUBS = [
+    { y:2025, t:'journal',    title:'FDS: Fractal Decomposition based Direct Search Approach for Continuous Dynamic Optimization',                    meta:'Information Sciences, Vol. 715 · Elsevier · 2025',                                                        authors:'<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+    { y:2025, t:'conference', title:'Evolutionary Fractal Decomposition based Search for Dynamic Optimization',                                       meta:'2025 IEEE International Conference on Systems, Man, and Cybernetics (SMC) · pp. 4043-4048 · IEEE',            authors:'<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+    { y:2025, t:'conference', title:'A 0-Shot Self-Attention Mechanism for Accelerated Diagonal Attention',                                          meta:'Winter Conference on Applications of Computer Vision (WACV) · pp. 7308-7315 · 2025',                            authors:'Viti, M.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
+    { y:2024, t:'journal',    title:'Vision Transformers Inference Acceleration Based on Adaptive Layer Normalization',                               meta:'Neurocomputing, Vol. 610, 128524 · Elsevier · 2024',                                                          authors:'Keddous, F.E.; <strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+    { y:2024, t:'conference', title:'Black-Box Optimization Based Adaptive Image Anonymization',                                                      meta:'2024 IEEE Congress on Evolutionary Computation (CEC) · pp. 1-8 · IEEE',                                        authors:'<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+    { y:2024, t:'conference', title:'Evolutionary Algorithm Based Adaptive Image Anonymization',                                                      meta:'Proceedings of the GECCO Companion · pp. 683-686 · 2024',                                                    authors:'<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+    { y:2024, t:'conference', title:'Towards Lightweight Transformer Architecture: an Analysis on Semantic Segmentation',                            meta:'ACDSA 2024 · pp. 1-6 · IEEE',                                                                                 authors:'Ivaniuk-Skulskyi, B.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
+    { y:2024, t:'thesis',     title:'Conception de methodes d\'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur', meta:'Universite Paris-Est Creteil Val-de-Marne · 2024',                                              authors:'<strong>Llanza Carmona, A.</strong>' },
+    { y:2023, t:'conference', title:'Adaptive Image Anonymization in the Context of Image Classification with Neural Networks',                       meta:'IEEE/CVF International Conference on Computer Vision (ICCV) · pp. 5074-5083 · 2023',                            authors:'Shvai, N.; <strong>Llanza Carmona, A.</strong>; Nakib, A.' },
+    { y:2023, t:'conference', title:'Deep Learning Models Compression Based on Evolutionary Algorithms and Digital Fractional Differentiation',       meta:'2023 IEEE Congress on Evolutionary Computation (CEC) · pp. 1-9 · IEEE',                                        authors:'<strong>Llanza, A.</strong>; Keddous, F.E.; Shvai, N.; Nakib, A.' },
+    { y:2023, t:'journal',    title:'Convolutional Neural Network Architecture Search Based on Fractal Decomposition Optimization Algorithm',         meta:'Expert Systems with Applications, Vol. 213, 118947 · Pergamon · 2023',                                       authors:'Souquet, L.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
+    { y:2023, t:'conference', title:'Inference Acceleration of Deep Learning Classifiers Based on RNN',                                              meta:'2023 IEEE International Conference on Image Processing (ICIP) · pp. 2450-2454 · IEEE',                         authors:'Keddous, F.E.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
+    { y:2023, t:'preprint',   title:'Convolutional Neural Network Compression Based on Improved Fractal Decomposition Algorithm for Large Scale Optimization', meta:'2023',                                                                                        authors:'<strong>Llanza, A.</strong>; Keddous, F.E.; Shvai, N.; Nakib, A.' },
+    { y:2022, t:'preprint',   title:'Dynamic Camera Alignment Optimization Problem Based on Fractal Decomposition Based Algorithm',                   meta:'arXiv:2209.11695 · 2022',                                                                                     authors:'<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+    { y:2022, t:'conference', title:'Investigating Fractal Decomposition Based Algorithm on Low-Dimensional Continuous Optimization Problems',        meta:'Metaheuristics International Conference (MIC 2022) · pp. 215-229 · Springer',                                  authors:'<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+    { y:2022, t:'conference', title:'DEvS: Data Distillation Algorithm Based on Evolution Strategy',                                                 meta:'GECCO Companion · pp. 292-295 · 2022',                                                                        authors:'Shvai, N.; <strong>Llanza, A.</strong>; Hasnat, A.; Nakib, A.' },
+    { y:2020, t:'conference', title:"HyperFDA: A Bi-Level Optimization Approach to Neural Architecture Search and Hyperparameters Optimization via Fractal Decomposition-Based Algorithm", meta:'GECCO Companion · pp. 155-156 · 2020',                              authors:'Souquet, L.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
+    { y:2020, t:'conference', title:'Hyperparameters Optimization for Neural Network Training Using Fractal Decomposition-Based Algorithm',           meta:'2020 IEEE Congress on Evolutionary Computation (CEC) · pp. 1-6 · IEEE',                                        authors:'Souquet, L.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
+    { y:2020, t:'conference', title:'Real Time Automatic Urban Traffic Management Framework Based on CNN Under Limited Resources Constraint',          meta:'ICIAR 2020 · pp. 95-106 · Springer',                                                                          authors:'Meicler, A.; Sanogo, A.; Shvai, N.; <strong>Llanza, A.</strong>; et al.' },
+    { y:2019, t:'conference', title:"Semantic Segmentation Approach for Tunnel Roads Analysis",                                                       meta:'Applications of Digital Image Processing XLII, Vol. 11137, pp. 639-649 · SPIE · 2019',                        authors:'<strong>Llanza, A.</strong>; Sanogo, A.; Khata, M.; et al.' },
+    { y:2019, t:'conference', title:'PixMap: Automatic License Plate Recognition with CNN Based on Saliency Maps',                                   meta:'Digital Optical Technologies 2019, Vol. 11062, pp. 92-104 · SPIE',                                             authors:'Sanogo, A.; <strong>Llanza, A.</strong>; Shvai, N.; et al.' },
+    { y:2019, t:'conference', title:'Application Guided Image Quality Estimation Based on Classification',                                           meta:'2019 IEEE International Conference on Image Processing (ICIP) · pp. 549-553 · IEEE',                            authors:'Hasnat, A.; Shvai, N.; Sanogo, A.; Khata, M.; <strong>Llanza, A.</strong>; et al.' },
+    { y:2019, t:'conference', title:'Novel Context-Aware Classification for Highly Accurate Automatic Toll Collection',                              meta:'2019 IEEE Intelligent Vehicles Symposium (IV) · pp. 1105-1110 · IEEE',                                          authors:'Khata, M.; Shvai, N.; Hasnat, A.; <strong>Llanza, A.</strong>; et al.' },
+    { y:2015, t:'conference', title:'A Feature-Based Gaze Estimation Algorithm for Natural Light Scenarios',                                         meta:'Iberian Conference on Pattern Recognition and Image Analysis (IbPRIA) · pp. 569-576 · Springer · 2015',        authors:'Ferhat, O.; <strong>Llanza, A.</strong>; Vilarino, F.' },
+    { y:2015, t:'conference', title:'Gaze Interaction for Multi-Display Systems Using Natural Light Eye-Tracker',                                    meta:'SAGA Workshop, ETRA · 2015',                                                                                   authors:'Ferhat, O.; <strong>Llanza, A.</strong>; Vilarino, F.' },
+  ];
+
+  var BADGE_CSS = { journal:'badge-journal', conference:'badge-conf', thesis:'badge-thesis', preprint:'badge-preprint' };
+  var currentLang   = 'en';
+  var currentFilter = 'recent';
+
+  /* ─── Translations ─── */
+  var T = {
+    en: {
+      nav_about:'About', nav_research:'Research', nav_experience:'Experience',
+      nav_publications:'Publications', nav_connect:'Connect',
+      sec_about:'About', sec_research:'Research Interests',
+      sec_experience:'Experience and Education', sec_languages:'Languages',
+      sec_publications:'Publications', sec_connect:'Connect',
+      hero_eyebrow:'Researcher & Data Scientist',
+      hero_title:'Data Scientist · VINCI | PhD · Universite Paris-Est Creteil',
+      hero_desc:'Researcher specialising in metaheuristic optimisation, deep learning, and computer vision. My work spans fractal-decomposition algorithms, neural-network compression, image anonymisation, and intelligent transport systems, from fundamental theory to industrial applications.',
+      hero_btn_pub:'Publications',
+      about_p1:'I am a Data Scientist at <strong>VINCI</strong> (France) and a researcher affiliated with the <strong>Laboratoire Images, Signaux et Syst&egrave;mes Intelligents (LISSI)</strong> at Universite Paris-Est Creteil Val-de-Marne (UPEC). In 2024 I obtained my PhD, titled <em>"Conception de methodes d\'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur"</em>, under the supervision of Nadiya Shvai and Amir Nakib.',
+      about_p2:'My academic journey began at the <strong>Universitat Autonoma de Barcelona (UAB)</strong>, where I earned a Master\'s degree in Computer Vision and was a researcher at the <strong>Computer Vision Centre (CVC)</strong>. Early work focused on eye-tracking systems using natural-light webcams, achieving a 34% reduction in gaze-estimation error over baseline methods.',
+      about_p3:'My research now centres on the <strong>Fractal Decomposition Algorithm (FDA)</strong>, a deterministic metaheuristic that recursively subdivides search spaces using geometric hyperspheres, and its applications to dynamic optimisation, neural-architecture search, model compression, and real-world computer-vision tasks.',
+      about_pos_label:'Current Position', about_pos_val:'Data Scientist, VINCI, France',
+      about_phd_label:'PhD (2020-2024)',   about_lab_label:'Lab Affiliation', about_loc_label:'Location',
+      tag1:'Metaheuristic Optimisation',tag2:'Fractal Decomposition Algorithm',tag3:'Deep Learning',
+      tag4:'Neural Architecture Search',tag5:'Model Compression',tag6:'Computer Vision',
+      tag7:'Semantic Segmentation',tag8:'Image Anonymisation',tag9:'Gaze Estimation',
+      tag10:'Autonomous Driving',tag11:'Intelligent Transport Systems',tag12:'Dynamic Optimisation',
+      tag13:'Data Distillation',tag14:'Vision Transformers',tag15:'Evolutionary Computation',
+      rc1_title:'Fractal Decomposition Algorithm',
+      rc1_desc:'Design and analysis of FDA, a deterministic metaheuristic that builds a search tree by recursively partitioning continuous solution spaces via geometric hyperspheres, applicable to large-scale and dynamic optimisation.',
+      rc2_title:'Deep Learning Optimisation',
+      rc2_desc:'Neural-architecture search, hyperparameter optimisation, and model compression (pruning, quantisation) driven by evolutionary and fractal-based algorithms to deploy efficient models under resource constraints.',
+      rc3_title:'Computer Vision Applications',
+      rc3_desc:'Semantic segmentation for tunnel roads, license plate recognition, urban traffic management, adaptive image anonymisation, and lightweight transformer architectures for edge deployment.',
+      rc4_title:'Privacy and Anonymisation',
+      rc4_desc:'Adaptive image anonymisation methods that balance privacy preservation with utility for downstream classification tasks, using black-box and evolutionary optimisation strategies.',
+      rc5_title:'Intelligent Transport Systems',
+      rc5_desc:'Real-time CNN-based traffic management, automatic toll collection, camera alignment optimisation, and road infrastructure analysis using state-of-the-art deep learning models.',
+      rc6_title:'Gaze Estimation and HCI',
+      rc6_desc:'Feature-based gaze estimation using natural-light webcams for multi-display systems, enabling low-cost human-computer interaction without specialised hardware.',
+      work_label:'Work Experience', edu_label:'Education',
+      exp1_year:'2017 - Present', exp1_title:'Data Scientist', exp1_sub:'Cyclope (VINCI), Paris, France',
+      exp1_desc:'Development of computer vision software for license plate detection and reading (YOLO v2 and v3), road semantic segmentation, and automatic incident detection from tunnel camera streams.',
+      exp2_year:'2016 - 2017',   exp2_title:'CTO and Co-Founder', exp2_sub:'RETAILQuant, Munich, Germany',
+      exp2_desc:'Founded and led the technology of a computer vision startup for detecting and classifying demographics (gender, age, emotions, ethnicity) from faces. Awarded 125,000 EUR by the German government EXIST programme.',
+      exp3_year:'2014 - 2016',   exp3_title:'Research Intern', exp3_sub:'Computer Vision Centre (CVC), UAB, Barcelona',
+      exp3_desc:'Research and development of eye-tracking software using natural-light webcams. Published paper at ibPRIA 2015: novel gaze-estimation algorithm reducing horizontal error by 34% over baseline.',
+      edu1_year:'2020 - 2024', edu1_title:'PhD in Optimisation and Computer Vision', edu1_sub:'Universite Paris-Est Creteil Val-de-Marne (UPEC)',
+      edu1_desc:'Thesis: "Conception de methodes d\'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur." Supervised by Nadiya Shvai and Amir Nakib.',
+      edu2_year:'2015 - 2016', edu2_title:"Master's in Computer Vision", edu2_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu2_desc:'GPA: 8.04/10. Specialised programme covering image processing, machine learning, 3D vision, and visual tracking. Dissertation on fashion-item recommendation via neural networks.',
+      edu3_year:'2011 - 2015', edu3_title:'BSc in Computer Science', edu3_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu3_desc:'GPA: 7.14/10. Final degree project at the Computer Vision Centre: eye tracking configuration based on a webcam and implementation of a novel gaze estimation algorithm.',
+      lang_spanish:'Spanish', lang_catalan:'Catalan', lang_english:'English', lang_french:'French', lang_german:'German',
+      lang_native:'Native', lang_c1:'Proficient (C1)', lang_b1:'Independent (B1)', lang_b2:'Independent (B2)', lang_a2:'Basic (A2)',
+      filter_recent:'5 Most Recent', filter_journal:'Journal', filter_conf:'Conference', filter_thesis:'PhD Thesis', filter_preprint:'Preprint',
+      pub_expand:'+ Show all publications',
+      badge_journal:'Journal', badge_conf:'Conference', badge_thesis:'PhD Thesis', badge_preprint:'Preprint',
+      link_li_label:'Professional', link_orcid_label:'Research ID', link_gs_label:'Citations', link_mpb_label:'Project',
+      connect_desc:'Find me on the following platforms or explore related projects.',
+      footer_text:'&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
+    },
+    es: {
+      nav_about:'Sobre mi', nav_research:'Investigacion', nav_experience:'Experiencia',
+      nav_publications:'Publicaciones', nav_connect:'Contacto',
+      sec_about:'Sobre mi', sec_research:'Lineas de Investigacion',
+      sec_experience:'Experiencia y Formacion', sec_languages:'Idiomas',
+      sec_publications:'Publicaciones', sec_connect:'Contacto',
+      hero_eyebrow:'Investigador y Cientifico de Datos',
+      hero_title:'Cientifico de Datos · VINCI | Doctor · Universite Paris-Est Creteil',
+      hero_desc:'Investigador especializado en optimizacion metaheuristica, aprendizaje profundo y vision por computador. Mi trabajo abarca algoritmos de descomposicion fractal, compresion de redes neuronales, anonimizacion de imagenes y sistemas de transporte inteligente, desde la teoria fundamental hasta las aplicaciones industriales.',
+      hero_btn_pub:'Publicaciones',
+      about_p1:'Soy Cientifico de Datos en <strong>VINCI</strong> (Francia) e investigador afiliado al <strong>Laboratoire Images, Signaux et Syst&egrave;mes Intelligents (LISSI)</strong> de la Universite Paris-Est Creteil Val-de-Marne (UPEC). En 2024 obtuve mi doctorado, titulado <em>"Conception de methodes d\'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur"</em>, bajo la supervision de Nadiya Shvai y Amir Nakib.',
+      about_p2:'Mi trayectoria academica comenzo en la <strong>Universitat Autonoma de Barcelona (UAB)</strong>, donde obtuve un Master en Vision por Computador e investigue en el <strong>Centre de Visio per Computador (CVC)</strong>. Mi trabajo inicial se centro en sistemas de seguimiento ocular con webcam de luz natural, logrando una reduccion del 34% en el error de estimacion.',
+      about_p3:'Mi investigacion actual se centra en el <strong>Algoritmo de Descomposicion Fractal (FDA)</strong>, una metaheuristica determinista que subdivide recursivamente los espacios de busqueda mediante hiperesferas geometricas, y sus aplicaciones a la optimizacion dinamica, la busqueda de arquitecturas neuronales, la compresion de modelos y tareas de vision por computador.',
+      about_pos_label:'Puesto actual', about_pos_val:'Cientifico de Datos, VINCI, Francia',
+      about_phd_label:'Doctorado (2020-2024)', about_lab_label:'Laboratorio', about_loc_label:'Ubicacion',
+      tag1:'Optimizacion Metaheuristica',tag2:'Algoritmo de Descomposicion Fractal',tag3:'Aprendizaje Profundo',
+      tag4:'Busqueda de Arquitecturas Neuronales',tag5:'Compresion de Modelos',tag6:'Vision por Computador',
+      tag7:'Segmentacion Semantica',tag8:'Anonimizacion de Imagenes',tag9:'Estimacion de la Mirada',
+      tag10:'Conduccion Autonoma',tag11:'Sistemas de Transporte Inteligente',tag12:'Optimizacion Dinamica',
+      tag13:'Destilacion de Datos',tag14:'Vision Transformers',tag15:'Computacion Evolutiva',
+      rc1_title:'Algoritmo de Descomposicion Fractal',
+      rc1_desc:'Diseno y analisis del FDA, una metaheuristica determinista que construye un arbol de busqueda particionando recursivamente espacios de soluciones continuas mediante hiperesferas, aplicable a optimizacion a gran escala y dinamica.',
+      rc2_title:'Optimizacion de Aprendizaje Profundo',
+      rc2_desc:'Busqueda de arquitecturas neuronales, optimizacion de hiperparametros y compresion de modelos (poda, cuantizacion) impulsados por algoritmos evolutivos y fractales para desplegar modelos eficientes bajo restricciones de recursos.',
+      rc3_title:'Aplicaciones de Vision por Computador',
+      rc3_desc:'Segmentacion semantica en tuneles, reconocimiento de matriculas, gestion del trafico urbano, anonimizacion adaptativa de imagenes y arquitecturas transformer ligeras para despliegue en el borde.',
+      rc4_title:'Privacidad y Anonimizacion',
+      rc4_desc:'Metodos de anonimizacion adaptativa de imagenes que equilibran la preservacion de la privacidad con la utilidad para tareas de clasificacion, usando estrategias evolutivas y de caja negra.',
+      rc5_title:'Sistemas de Transporte Inteligente',
+      rc5_desc:'Gestion del trafico en tiempo real con CNN, cobro automatico de peajes, optimizacion del alineamiento de camaras y analisis de infraestructuras viarias con modelos de aprendizaje profundo.',
+      rc6_title:'Estimacion de la Mirada e IHC',
+      rc6_desc:'Estimacion de la mirada basada en caracteristicas con webcam de luz natural para sistemas multidisplay, permitiendo interaccion humano-computador de bajo coste sin hardware especializado.',
+      work_label:'Experiencia Laboral', edu_label:'Formacion',
+      exp1_year:'2017 - Presente', exp1_title:'Cientifico de Datos', exp1_sub:'Cyclope (VINCI), Paris, Francia',
+      exp1_desc:'Desarrollo de software de vision artificial para la deteccion y lectura de matriculas (YOLO v2 y v3), segmentacion semantica de carreteras y deteccion automatica de incidentes en tuneles.',
+      exp2_year:'2016 - 2017', exp2_title:'CTO y Cofundador', exp2_sub:'RETAILQuant, Munich, Alemania',
+      exp2_desc:'Fundacion y direccion tecnologica de una startup de vision artificial para detectar y clasificar datos demograficos (genero, edad, emociones, etnia). Galardonado con 125.000 EUR del programa EXIST del gobierno aleman.',
+      exp3_year:'2014 - 2016', exp3_title:'Investigador en Practicas', exp3_sub:'Centre de Visio per Computador (CVC), UAB, Barcelona',
+      exp3_desc:'Investigacion y desarrollo de software de seguimiento ocular con webcam de luz natural. Publicado en ibPRIA 2015: algoritmo novedoso de estimacion de la mirada que reduce el error horizontal en un 34%.',
+      edu1_year:'2020 - 2024', edu1_title:'Doctorado en Optimizacion y Vision por Computador', edu1_sub:'Universite Paris-Est Creteil Val-de-Marne (UPEC)',
+      edu1_desc:'Tesis: "Conception de methodes d\'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur." Supervisado por Nadiya Shvai y Amir Nakib.',
+      edu2_year:'2015 - 2016', edu2_title:'Master en Vision por Computador', edu2_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu2_desc:'Nota media: 8,04/10. Programa especializado en procesamiento de imagenes, aprendizaje automatico, vision 3D y seguimiento visual. Disertacion sobre recomendacion de moda con redes neuronales.',
+      edu3_year:'2011 - 2015', edu3_title:'Grado en Ingenieria Informatica', edu3_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu3_desc:'Nota media: 7,14/10. Proyecto final en el Centre de Visio per Computador: configuracion de eye tracking con webcam e implementacion de un algoritmo novedoso de estimacion de la mirada.',
+      lang_spanish:'Espanol', lang_catalan:'Catalan', lang_english:'Ingles', lang_french:'Frances', lang_german:'Aleman',
+      lang_native:'Nativo', lang_c1:'Competente (C1)', lang_b1:'Independiente (B1)', lang_b2:'Independiente (B2)', lang_a2:'Basico (A2)',
+      filter_recent:'5 Mas Recientes', filter_journal:'Revista', filter_conf:'Conferencia', filter_thesis:'Tesis Doctoral', filter_preprint:'Preimpresion',
+      pub_expand:'+ Mostrar todas las publicaciones',
+      badge_journal:'Revista', badge_conf:'Conferencia', badge_thesis:'Tesis Doctoral', badge_preprint:'Preimpresion',
+      link_li_label:'Profesional', link_orcid_label:'ID de Investigacion', link_gs_label:'Citas', link_mpb_label:'Proyecto',
+      connect_desc:'Encuentrame en las siguientes plataformas o explora proyectos relacionados.',
+      footer_text:'&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
+    },
+    ca: {
+      nav_about:'Sobre mi', nav_research:'Recerca', nav_experience:'Experiencia',
+      nav_publications:'Publicacions', nav_connect:'Contacte',
+      sec_about:'Sobre mi', sec_research:'Linies de Recerca',
+      sec_experience:'Experiencia i Formacio', sec_languages:'Idiomes',
+      sec_publications:'Publicacions', sec_connect:'Contacte',
+      hero_eyebrow:'Investigador i Cientific de Dades',
+      hero_title:'Cientific de Dades · VINCI | Doctor · Universite Paris-Est Creteil',
+      hero_desc:"Investigador especialitzat en optimitzacio metaheuristica, aprenentatge profund i visio per computador. El meu treball abasta algoritmes de descomposicio fractal, compressio de xarxes neuronals, anonimitzacio d'imatges i sistemes de transport intel·ligent, des de la teoria fonamental fins a les aplicacions industrials.",
+      hero_btn_pub:'Publicacions',
+      about_p1:"Soc Cientific de Dades a <strong>VINCI</strong> (Franca) i investigador afiliat al <strong>Laboratoire Images, Signaux et Syst&egrave;mes Intelligents (LISSI)</strong> de la Universite Paris-Est Creteil Val-de-Marne (UPEC). L'any 2024 vaig obtenir el doctorat, titulat <em>\"Conception de methodes d'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur\"</em>, sota la supervisio de Nadiya Shvai i Amir Nakib.",
+      about_p2:"La meva trajectoria academica va comencar a la <strong>Universitat Autonoma de Barcelona (UAB)</strong>, on vaig obtenir un Master en Visio per Computador i vaig investigar al <strong>Centre de Visio per Computador (CVC)</strong>. El treball inicial es va centrar en sistemes de seguiment ocular amb webcam de llum natural, assolint una reduccio del 34% en l'error d'estimacio.",
+      about_p3:"La meva recerca actual se centra en l'<strong>Algorisme de Descomposicio Fractal (FDA)</strong>, una metaheuristica determinista que subdivideix recursivament els espais de cerca mitjancant hiperesfers geometriques, i les seves aplicacions a l'optimitzacio dinamica, la cerca d'arquitectures neuronals, la compressio de models i tasques de visio per computador.",
+      about_pos_label:'Posicio actual', about_pos_val:'Cientific de Dades, VINCI, Franca',
+      about_phd_label:'Doctorat (2020-2024)', about_lab_label:'Laboratori', about_loc_label:'Ubicacio',
+      tag1:'Optimitzacio Metaheuristica',tag2:'Algorisme de Descomposicio Fractal',tag3:'Aprenentatge Profund',
+      tag4:"Cerca d'Arquitectures Neuronals",tag5:'Compressio de Models',tag6:'Visio per Computador',
+      tag7:'Segmentacio Semantica',tag8:"Anonimitzacio d'Imatges",tag9:'Estimacio de la Mirada',
+      tag10:'Conduccio Autonoma',tag11:'Sistemes de Transport Intel·ligent',tag12:'Optimitzacio Dinamica',
+      tag13:'Destillacio de Dades',tag14:'Vision Transformers',tag15:'Computacio Evolutiva',
+      rc1_title:'Algorisme de Descomposicio Fractal',
+      rc1_desc:"Disseny i analisi de l'FDA, una metaheuristica determinista que construeix un arbre de cerca particionant recursivament espais de solucions continues mitjancant hiperesfers, aplicable a optimitzacio a gran escala i dinamica.",
+      rc2_title:"Optimitzacio d'Aprenentatge Profund",
+      rc2_desc:"Cerca d'arquitectures neuronals, optimitzacio d'hiperparametres i compressio de models (poda, quantitzacio) impulsats per algoritmes evolutius i fractals per desplegar models eficients sota restriccions de recursos.",
+      rc3_title:'Aplicacions de Visio per Computador',
+      rc3_desc:"Segmentacio semantica en tunels, reconeixement de matricules, gestio del transit urba, anonimitzacio adaptativa d'imatges i arquitectures transformer lleugeres per a desplegament en l'aresta.",
+      rc4_title:'Privadesa i Anonimitzacio',
+      rc4_desc:"Metodes d'anonimitzacio adaptativa d'imatges que equilibren la preservacio de la privadesa amb la utilitat per a tasques de classificacio, usant estrategies evolutives i de caixa negra.",
+      rc5_title:'Sistemes de Transport Intel·ligent',
+      rc5_desc:"Gestio del transit en temps real amb CNN, cobrament automatic de peatges, optimitzacio de l'alineament de cameras i analisi d'infraestructures viaries amb models d'aprenentatge profund.",
+      rc6_title:'Estimacio de la Mirada i IHC',
+      rc6_desc:"Estimacio de la mirada basada en caracteristiques amb webcam de llum natural per a sistemes multidisplay, permetent interaccio huma-computador de baix cost sense maquinari especialitzat.",
+      work_label:'Experiencia Laboral', edu_label:'Formacio',
+      exp1_year:'2017 - Present', exp1_title:'Cientific de Dades', exp1_sub:'Cyclope (VINCI), Paris, Franca',
+      exp1_desc:"Desenvolupament de programari de visio artificial per a la deteccio i lectura de matricules (YOLO v2 i v3), segmentacio semantica de carreteres i deteccio automatica d'incidents en tunels.",
+      exp2_year:'2016 - 2017', exp2_title:'CTO i Cofundador', exp2_sub:'RETAILQuant, Munic, Alemanya',
+      exp2_desc:"Fundacio i direccio tecnologica d'una startup de visio artificial per detectar i classificar dades demografiques (genere, edat, emocions, etnia). Guardonat amb 125.000 EUR del programa EXIST del govern alemany.",
+      exp3_year:'2014 - 2016', exp3_title:'Investigador en Practiques', exp3_sub:'Centre de Visio per Computador (CVC), UAB, Barcelona',
+      exp3_desc:"Recerca i desenvolupament de programari de seguiment ocular amb webcam de llum natural. Publicat a ibPRIA 2015: algorisme novedos d'estimacio de la mirada que redueix l'error horitzontal un 34%.",
+      edu1_year:'2020 - 2024', edu1_title:'Doctorat en Optimitzacio i Visio per Computador', edu1_sub:'Universite Paris-Est Creteil Val-de-Marne (UPEC)',
+      edu1_desc:"Tesi: \"Conception de methodes d'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur.\" Supervisat per Nadiya Shvai i Amir Nakib.",
+      edu2_year:'2015 - 2016', edu2_title:'Master en Visio per Computador', edu2_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu2_desc:"Nota mitjana: 8,04/10. Programa especialitzat en processament d'imatges, aprenentatge automatic, visio 3D i seguiment visual. Dissertacio sobre recomanacio de moda amb xarxes neuronals.",
+      edu3_year:'2011 - 2015', edu3_title:'Grau en Enginyeria Informatica', edu3_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu3_desc:"Nota mitjana: 7,14/10. Projecte final al Centre de Visio per Computador: configuracio d'eye tracking amb webcam i implementacio d'un algorisme novedos d'estimacio de la mirada.",
+      lang_spanish:'Espanyol', lang_catalan:'Catala', lang_english:'Angles', lang_french:'Frances', lang_german:'Alemany',
+      lang_native:'Natiu', lang_c1:'Competent (C1)', lang_b1:'Independent (B1)', lang_b2:'Independent (B2)', lang_a2:'Basic (A2)',
+      filter_recent:'5 Mes Recents', filter_journal:'Revista', filter_conf:'Conferencia', filter_thesis:'Tesi Doctoral', filter_preprint:'Preprint',
+      pub_expand:'+ Mostrar totes les publicacions',
+      badge_journal:'Revista', badge_conf:'Conferencia', badge_thesis:'Tesi Doctoral', badge_preprint:'Preprint',
+      link_li_label:'Professional', link_orcid_label:"ID d'Investigacio", link_gs_label:'Citacions', link_mpb_label:'Projecte',
+      connect_desc:"Troba'm a les plataformes seguents o explora projectes relacionats.",
+      footer_text:'&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
+    },
+    fr: {
+      nav_about:'A propos', nav_research:'Recherche', nav_experience:'Experience',
+      nav_publications:'Publications', nav_connect:'Contact',
+      sec_about:'A propos', sec_research:'Themes de Recherche',
+      sec_experience:'Experience et Formation', sec_languages:'Langues',
+      sec_publications:'Publications', sec_connect:'Contact',
+      hero_eyebrow:'Chercheur et Data Scientist',
+      hero_title:'Data Scientist · VINCI | Docteur · Universite Paris-Est Creteil',
+      hero_desc:"Chercheur specialise en optimisation metaheuristique, apprentissage profond et vision par ordinateur. Mes travaux portent sur les algorithmes de decomposition fractale, la compression de reseaux de neurones, l'anonymisation d'images et les systemes de transport intelligents, de la theorie fondamentale aux applications industrielles.",
+      hero_btn_pub:'Publications',
+      about_p1:"Je suis Data Scientist chez <strong>VINCI</strong> (France) et chercheur affilie au <strong>Laboratoire Images, Signaux et Syst&egrave;mes Intelligents (LISSI)</strong> de l'Universite Paris-Est Creteil Val-de-Marne (UPEC). En 2024, j'ai obtenu mon doctorat intitule <em>\"Conception de methodes d'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur\"</em>, sous la direction de Nadiya Shvai et Amir Nakib.",
+      about_p2:"Mon parcours academique a commence a l'<strong>Universitat Autonoma de Barcelona (UAB)</strong>, ou j'ai obtenu un Master en Vision par Ordinateur et effectue mes recherches au <strong>Centre de Visio per Computador (CVC)</strong>. Mes premiers travaux portaient sur les systemes de suivi oculaire par webcam en lumiere naturelle, atteignant une reduction de 34% de l'erreur d'estimation.",
+      about_p3:"Mes recherches actuelles se concentrent sur l'<strong>Algorithme de Decomposition Fractale (FDA)</strong>, une metaheuristique deterministe qui subdivise recursivement les espaces de recherche via des hyperspheres geometriques, et ses applications a l'optimisation dynamique, la recherche d'architectures neuronales, la compression de modeles et les taches de vision par ordinateur.",
+      about_pos_label:'Poste actuel', about_pos_val:'Data Scientist, VINCI, France',
+      about_phd_label:'Doctorat (2020-2024)', about_lab_label:'Laboratoire', about_loc_label:'Localisation',
+      tag1:'Optimisation Metaheuristique',tag2:'Algorithme de Decomposition Fractale',tag3:'Apprentissage Profond',
+      tag4:"Recherche d'Architectures Neuronales",tag5:'Compression de Modeles',tag6:'Vision par Ordinateur',
+      tag7:'Segmentation Semantique',tag8:"Anonymisation d'Images",tag9:'Estimation du Regard',
+      tag10:'Conduite Autonome',tag11:'Systemes de Transport Intelligents',tag12:'Optimisation Dynamique',
+      tag13:'Distillation de Donnees',tag14:'Vision Transformers',tag15:'Calcul Evolutionnaire',
+      rc1_title:'Algorithme de Decomposition Fractale',
+      rc1_desc:"Conception et analyse de l'FDA, une metaheuristique deterministe qui construit un arbre de recherche en partitionnant recursivement les espaces de solutions continus via des hyperspheres, applicable a l'optimisation a grande echelle et dynamique.",
+      rc2_title:"Optimisation de l'Apprentissage Profond",
+      rc2_desc:"Recherche d'architectures de reseaux, optimisation d'hyperparametres et compression de modeles (elagage, quantification) par des algorithmes evolutionnaires et fractals pour deployer des modeles efficaces sous contraintes de ressources.",
+      rc3_title:'Applications Vision par Ordinateur',
+      rc3_desc:"Segmentation semantique en tunnel, reconnaissance de plaques, gestion du trafic urbain, anonymisation adaptative d'images et architectures transformer legeres pour le deploiement en peripherie.",
+      rc4_title:'Confidentialite et Anonymisation',
+      rc4_desc:"Methodes d'anonymisation adaptative d'images equilibrant la vie privee et l'utilite pour des taches de classification, via des strategies evolutionnaires et boite noire.",
+      rc5_title:'Systemes de Transport Intelligents',
+      rc5_desc:"Gestion du trafic en temps reel par CNN, peage automatique, optimisation de l'alignement de cameras et analyse des infrastructures routieres avec des modeles d'apprentissage profond.",
+      rc6_title:'Estimation du Regard et IHM',
+      rc6_desc:"Estimation du regard en lumiere naturelle pour systemes multi-ecrans, permettant une interaction homme-machine a faible cout sans materiel specialise.",
+      work_label:'Experience Professionnelle', edu_label:'Formation',
+      exp1_year:'2017 - Present', exp1_title:'Data Scientist', exp1_sub:'Cyclope (VINCI), Paris, France',
+      exp1_desc:"Developpement de logiciels de vision par ordinateur pour la detection et lecture de plaques d'immatriculation (YOLO v2 et v3), la segmentation semantique de routes et la detection automatique d'incidents en tunnel.",
+      exp2_year:'2016 - 2017', exp2_title:'CTO et Cofondateur', exp2_sub:'RETAILQuant, Munich, Allemagne',
+      exp2_desc:"Creation et direction technologique d'une startup de vision par ordinateur pour detecter et classifier des donnees demographiques (genre, age, emotions, ethnicite). Recompense de 125 000 EUR par le programme EXIST du gouvernement allemand.",
+      exp3_year:'2014 - 2016', exp3_title:'Stagiaire Chercheur', exp3_sub:'Centre de Visio per Computador (CVC), UAB, Barcelone',
+      exp3_desc:"Recherche et developpement de logiciels de suivi oculaire par webcam en lumiere naturelle. Publie a ibPRIA 2015: algorithme novateur d'estimation du regard reduisant l'erreur horizontale de 34%.",
+      edu1_year:'2020 - 2024', edu1_title:'Doctorat en Optimisation et Vision par Ordinateur', edu1_sub:'Universite Paris-Est Creteil Val-de-Marne (UPEC)',
+      edu1_desc:"These: \"Conception de methodes d'optimisation basees sur la decomposition fractale. Application a la vision par ordinateur.\" Supervise par Nadiya Shvai et Amir Nakib.",
+      edu2_year:'2015 - 2016', edu2_title:'Master en Vision par Ordinateur', edu2_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu2_desc:"Moyenne: 8,04/10. Programme specialise couvrant le traitement d'image, l'apprentissage automatique, la vision 3D et le suivi visuel. Dissertation sur la recommandation de mode via des reseaux de neurones.",
+      edu3_year:'2011 - 2015', edu3_title:'Licence en Informatique', edu3_sub:'Universitat Autonoma de Barcelona (UAB)',
+      edu3_desc:"Moyenne: 7,14/10. Projet de fin d'etudes au Centre de Visio per Computador: configuration du suivi oculaire par webcam et implementation d'un algorithme novateur d'estimation du regard.",
+      lang_spanish:'Espagnol', lang_catalan:'Catalan', lang_english:'Anglais', lang_french:'Francais', lang_german:'Allemand',
+      lang_native:'Natif', lang_c1:'Maitrise (C1)', lang_b1:'Independant (B1)', lang_b2:'Independant (B2)', lang_a2:'Basique (A2)',
+      filter_recent:'5 Plus Recents', filter_journal:'Revue', filter_conf:'Conference', filter_thesis:'These de Doctorat', filter_preprint:'Prepublication',
+      pub_expand:'+ Afficher toutes les publications',
+      badge_journal:'Revue', badge_conf:'Conference', badge_thesis:'These de Doctorat', badge_preprint:'Prepublication',
+      link_li_label:'Professionnel', link_orcid_label:'ID de Recherche', link_gs_label:'Citations', link_mpb_label:'Projet',
+      connect_desc:'Retrouvez-moi sur les plateformes suivantes ou explorez des projets connexes.',
+      footer_text:'&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
+    }
+  };
+
+  /* ─── Render publications ─── */
+  function renderPubs(filter, lang) {
+    var tl       = T[lang];
+    var badgeMap = { journal: tl.badge_journal, conference: tl.badge_conf, thesis: tl.badge_thesis, preprint: tl.badge_preprint };
+    var isRecent = filter === 'recent';
+    var items    = isRecent ? PUBS.slice(0, 5)
+                 : filter === 'all' ? PUBS
+                 : PUBS.filter(function(p){ return p.t === filter; });
+    document.getElementById('pubList').innerHTML = items.map(function(p) {
+      return '<div class="pub-item">'
+        + '<div class="pub-header"><span class="pub-title">' + p.title + '</span>'
+        + '<span class="pub-badge ' + BADGE_CSS[p.t] + '">' + (badgeMap[p.t] || p.t) + '</span></div>'
+        + '<div class="pub-meta">' + p.meta + '</div>'
+        + '<div class="pub-authors">' + p.authors + '</div>'
+        + '</div>';
+    }).join('');
+    var btn = document.getElementById('pubExpandBtn');
+    if (isRecent) {
+      btn.style.display = 'inline-block';
+      btn.textContent   = tl.pub_expand || '+ Show all publications';
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+
+  /* ─── Lang dropdown meta ─── */
+  var FLAGS = {
+    en: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#012169"/><line x1="0" y1="0" x2="5" y2="3" stroke="#fff" stroke-width=".6"/><line x1="5" y1="0" x2="0" y2="3" stroke="#fff" stroke-width=".6"/><line x1="0" y1="0" x2="5" y2="3" stroke="#C8102E" stroke-width=".3"/><line x1="5" y1="0" x2="0" y2="3" stroke="#C8102E" stroke-width=".3"/><rect x="2" y="0" width="1" height="3" fill="#fff"/><rect x="0" y="1" width="5" height="1" fill="#fff"/><rect x="2.2" y="0" width=".6" height="3" fill="#C8102E"/><rect x="0" y="1.2" width="5" height=".6" fill="#C8102E"/></svg>',
+    es: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#AA151B"/><rect y=".75" width="5" height="1.5" fill="#F1BF00"/></svg>',
+    ca: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#FCDD09"/><rect y=".375" width="5" height=".375" fill="#DA121A"/><rect y="1.125" width="5" height=".375" fill="#DA121A"/><rect y="1.875" width="5" height=".375" fill="#DA121A"/><rect y="2.625" width="5" height=".375" fill="#DA121A"/></svg>',
+    fr: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" width="18" height="11" style="vertical-align:middle;border-radius:2px;"><rect width="5" height="3" fill="#002395"/><rect x="1.667" width="1.666" height="3" fill="#fff"/><rect x="3.333" width="1.667" height="3" fill="#ED2939"/></svg>'
+  };
+  var LANG_META = {
+    en: { flagHtml: FLAGS.en, code:'EN' },
+    es: { flagHtml: FLAGS.es, code:'ES' },
+    ca: { flagHtml: FLAGS.ca, code:'CA' },
+    fr: { flagHtml: FLAGS.fr, code:'FR' }
+  };
+
+  /* ─── Apply language ─── */
+  function applyLang(lang) {
+    currentLang = lang;
+    var tl = T[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var k = el.getAttribute('data-i18n');
+      if (tl[k] !== undefined) el.textContent = tl[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+      var k = el.getAttribute('data-i18n-html');
+      if (tl[k] !== undefined) el.innerHTML = tl[k];
+    });
+    /* update dropdown trigger */
+    var meta = LANG_META[lang] || { flagHtml:'🌐', code:lang.toUpperCase() };
+    document.getElementById('langFlag').innerHTML = meta.flagHtml;
+    document.getElementById('langCode').textContent = meta.code;
+    document.querySelectorAll('.lang-opt').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    renderPubs(currentFilter, lang);
+    localStorage.setItem('lang', lang);
+  }
+
+  /* ─── Theme toggle ─── */
+  var htmlEl    = document.documentElement;
+  var themeBtn  = document.getElementById('themeBtn');
+  var themeIcon = document.getElementById('themeIcon');
+
+  function getVisual() {
+    var e = htmlEl.getAttribute('data-theme');
+    if (e === 'dark' || e === 'light') return e;
+    return window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+  }
+  function syncIcon(theme) {
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    themeBtn.title = theme === 'dark' ? 'Switch to Light' : 'Switch to Dark';
+  }
+
+  var savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark' || savedTheme === 'light') htmlEl.setAttribute('data-theme', savedTheme);
+  syncIcon(getVisual());
+
+  themeBtn.addEventListener('click', function() {
+    var next = getVisual() === 'dark' ? 'light' : 'dark';
+    htmlEl.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    syncIcon(next);
+  });
+
+  /* ─── Publication filters ─── */
+  document.querySelectorAll('.pub-filter').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.pub-filter').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderPubs(currentFilter, currentLang);
+    });
+  });
+
+  /* ─── Language dropdown ─── */
+  var langDropdown = document.getElementById('langDropdown');
+  var langTrigger  = document.getElementById('langTrigger');
+  langTrigger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var open = langDropdown.classList.toggle('open');
+    langTrigger.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('open');
+    langTrigger.setAttribute('aria-expanded', 'false');
+  });
+  document.querySelectorAll('.lang-opt').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      applyLang(btn.dataset.lang);
+      langDropdown.classList.remove('open');
+      langTrigger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ─── Expand / collapse publications ─── */
+  document.getElementById('pubExpandBtn').addEventListener('click', function() {
+    /* switch to "all" filter — click the first non-recent filter or just show all */
+    currentFilter = 'all';
+    document.querySelectorAll('.pub-filter').forEach(function(b){ b.classList.remove('active'); });
+    renderPubs('all', currentLang);
+  });
+
+  /* ─── Detect browser language ─── */
+  function detectLang() {
+    var supported = ['en', 'es', 'ca', 'fr'];
+    var saved = localStorage.getItem('lang');
+    if (saved && supported.indexOf(saved) !== -1) return saved;
+    var prefs = navigator.languages && navigator.languages.length
+      ? navigator.languages
+      : [navigator.language || 'en'];
+    for (var i = 0; i < prefs.length; i++) {
+      var code = prefs[i].toLowerCase().split('-')[0];
+      if (supported.indexOf(code) !== -1) return code;
+    }
+    return 'en';
+  }
+
+  /* ─── Init ─── */
+  applyLang(detectLang());
+
+}());
+</script>
+</body>
+</html>
