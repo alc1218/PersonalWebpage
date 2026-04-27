@@ -911,6 +911,7 @@
           <a href="#experience" data-i18n="nav_experience">Experience</a>
           <a href="#publications" data-i18n="nav_publications">Publications</a>
           <a href="#connect" data-i18n="nav_connect">Connect</a>
+          <a href="#projects" data-i18n="nav_projects">Projects</a>
         </div>
         <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
           <span id="themeIcon">🌙</span>
@@ -1355,12 +1356,31 @@
           </div>
         </a>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- Side Projects -->
+  <section id="projects">
+    <div class="container">
+      <h2 data-i18n="sec_projects">Side Projects</h2>
+      <div class="links-grid">
+
         <!-- MPB -->
         <a class="link-card" href="https://alc1218.github.io/MPB/" target="_blank" rel="noopener">
           <div class="link-logo"><span class="link-logo-emoji">🌐</span></div>
           <div class="link-card-info">
-            <span class="label" data-i18n="link_mpb_label">Project</span>
+            <span class="label" data-i18n="link_mpb_label">Benchmark</span>
             <span class="value">MPB</span>
+          </div>
+        </a>
+
+        <!-- Interactive Tales -->
+        <a class="link-card" href="https://alc1218.github.io/interactive_tales/" target="_blank" rel="noopener">
+          <div class="link-logo"><span class="link-logo-emoji">📖</span></div>
+          <div class="link-card-info">
+            <span class="label" data-i18n="link_tales_label">Interactive</span>
+            <span class="value">Interactive Tales</span>
           </div>
         </a>
 
@@ -1417,10 +1437,10 @@
       var T = {
         en: {
           nav_about: 'About', nav_research: 'Research', nav_experience: 'Experience',
-          nav_publications: 'Publications', nav_connect: 'Connect',
+          nav_publications: 'Publications', nav_connect: 'Connect', nav_projects: 'Projects',
           sec_about: 'About', sec_research: 'Research Interests',
           sec_experience: 'Experience and Education', sec_languages: 'Languages',
-          sec_publications: 'Publications', sec_connect: 'Connect',
+          sec_publications: 'Publications', sec_connect: 'Connect', sec_projects: 'Side Projects',
           hero_eyebrow: 'Researcher & Data Scientist',
           hero_title: 'Data Scientist · VINCI | PhD · Universite Paris-Est Creteil',
           hero_desc: 'Researcher specialising in metaheuristic optimisation, deep learning, and computer vision. My work spans fractal-decomposition algorithms, neural-network compression, image anonymisation, and intelligent transport systems, from fundamental theory to industrial applications.',
@@ -1465,16 +1485,16 @@
           filter_recent: '5 Most Recent', filter_journal: 'Journal', filter_conf: 'Conference', filter_thesis: 'PhD Thesis', filter_preprint: 'Preprint',
           pub_expand: '+ Show all publications',
           badge_journal: 'Journal', badge_conf: 'Conference', badge_thesis: 'PhD Thesis', badge_preprint: 'Preprint',
-          link_li_label: 'Professional', link_orcid_label: 'Research ID', link_gs_label: 'Citations', link_mpb_label: 'Project',
+          link_li_label: 'Professional', link_orcid_label: 'Research ID', link_gs_label: 'Citations', link_mpb_label: 'Project', link_tales_label: 'Side Project',
           connect_desc: 'Find me on the following platforms or explore related projects.',
           footer_text: '&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
         },
         es: {
           nav_about: 'Sobre mi', nav_research: 'Investigacion', nav_experience: 'Experiencia',
-          nav_publications: 'Publicaciones', nav_connect: 'Contacto',
+          nav_publications: 'Publicaciones', nav_connect: 'Contacto', nav_projects: 'Proyectos',
           sec_about: 'Sobre mi', sec_research: 'Lineas de Investigacion',
           sec_experience: 'Experiencia y Formacion', sec_languages: 'Idiomas',
-          sec_publications: 'Publicaciones', sec_connect: 'Contacto',
+          sec_publications: 'Publicaciones', sec_connect: 'Contacto', sec_projects: 'Proyectos Paralelos',
           hero_eyebrow: 'Investigador y Cientifico de Datos',
           hero_title: 'Cientifico de Datos · VINCI | Doctor · Universite Paris-Est Creteil',
           hero_desc: 'Investigador especializado en optimizacion metaheuristica, aprendizaje profundo y vision por computador. Mi trabajo abarca algoritmos de descomposicion fractal, compresion de redes neuronales, anonimizacion de imagenes y sistemas de transporte inteligente, desde la teoria fundamental hasta las aplicaciones industriales.',
@@ -1519,16 +1539,16 @@
           filter_recent: '5 Mas Recientes', filter_journal: 'Revista', filter_conf: 'Conferencia', filter_thesis: 'Tesis Doctoral', filter_preprint: 'Preimpresion',
           pub_expand: '+ Mostrar todas las publicaciones',
           badge_journal: 'Revista', badge_conf: 'Conferencia', badge_thesis: 'Tesis Doctoral', badge_preprint: 'Preimpresion',
-          link_li_label: 'Profesional', link_orcid_label: 'ID de Investigacion', link_gs_label: 'Citas', link_mpb_label: 'Proyecto',
+          link_li_label: 'Profesional', link_orcid_label: 'ID de Investigacion', link_gs_label: 'Citas', link_mpb_label: 'Proyecto', link_tales_label: 'Proyecto Paralelo',
           connect_desc: 'Encuentrame en las siguientes plataformas o explora proyectos relacionados.',
           footer_text: '&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
         },
         ca: {
           nav_about: 'Sobre mi', nav_research: 'Recerca', nav_experience: 'Experiencia',
-          nav_publications: 'Publicacions', nav_connect: 'Contacte',
+          nav_publications: 'Publicacions', nav_connect: 'Contacte', nav_projects: 'Projectes',
           sec_about: 'Sobre mi', sec_research: 'Linies de Recerca',
           sec_experience: 'Experiencia i Formacio', sec_languages: 'Idiomes',
-          sec_publications: 'Publicacions', sec_connect: 'Contacte',
+          sec_publications: 'Publicacions', sec_connect: 'Contacte', sec_projects: 'Projectes Paral·lels',
           hero_eyebrow: 'Investigador i Cientific de Dades',
           hero_title: 'Cientific de Dades · VINCI | Doctor · Universite Paris-Est Creteil',
           hero_desc: "Investigador especialitzat en optimitzacio metaheuristica, aprenentatge profund i visio per computador. El meu treball abasta algoritmes de descomposicio fractal, compressio de xarxes neuronals, anonimitzacio d'imatges i sistemes de transport intel·ligent, des de la teoria fonamental fins a les aplicacions industrials.",
@@ -1573,16 +1593,16 @@
           filter_recent: '5 Mes Recents', filter_journal: 'Revista', filter_conf: 'Conferencia', filter_thesis: 'Tesi Doctoral', filter_preprint: 'Preprint',
           pub_expand: '+ Mostrar totes les publicacions',
           badge_journal: 'Revista', badge_conf: 'Conferencia', badge_thesis: 'Tesi Doctoral', badge_preprint: 'Preprint',
-          link_li_label: 'Professional', link_orcid_label: "ID d'Investigacio", link_gs_label: 'Citacions', link_mpb_label: 'Projecte',
+          link_li_label: 'Professional', link_orcid_label: "ID d'Investigacio", link_gs_label: 'Citacions', link_mpb_label: 'Projecte', link_tales_label: 'Projecte Paral·lel',
           connect_desc: "Troba'm a les plataformes seguents o explora projectes relacionats.",
           footer_text: '&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
         },
         fr: {
           nav_about: 'A propos', nav_research: 'Recherche', nav_experience: 'Experience',
-          nav_publications: 'Publications', nav_connect: 'Contact',
+          nav_publications: 'Publications', nav_connect: 'Contact', nav_projects: 'Projets',
           sec_about: 'A propos', sec_research: 'Themes de Recherche',
           sec_experience: 'Experience et Formation', sec_languages: 'Langues',
-          sec_publications: 'Publications', sec_connect: 'Contact',
+          sec_publications: 'Publications', sec_connect: 'Contact', sec_projects: 'Projets Annexes',
           hero_eyebrow: 'Chercheur et Data Scientist',
           hero_title: 'Data Scientist · VINCI | Docteur · Universite Paris-Est Creteil',
           hero_desc: "Chercheur specialise en optimisation metaheuristique, apprentissage profond et vision par ordinateur. Mes travaux portent sur les algorithmes de decomposition fractale, la compression de reseaux de neurones, l'anonymisation d'images et les systemes de transport intelligents, de la theorie fondamentale aux applications industrielles.",
@@ -1627,7 +1647,7 @@
           filter_recent: '5 Plus Recents', filter_journal: 'Revue', filter_conf: 'Conference', filter_thesis: 'These de Doctorat', filter_preprint: 'Prepublication',
           pub_expand: '+ Afficher toutes les publications',
           badge_journal: 'Revue', badge_conf: 'Conference', badge_thesis: 'These de Doctorat', badge_preprint: 'Prepublication',
-          link_li_label: 'Professionnel', link_orcid_label: 'ID de Recherche', link_gs_label: 'Citations', link_mpb_label: 'Projet',
+          link_li_label: 'Professionnel', link_orcid_label: 'ID de Recherche', link_gs_label: 'Citations', link_mpb_label: 'Projet', link_tales_label: 'Projet Annexe',
           connect_desc: 'Retrouvez-moi sur les plateformes suivantes ou explorez des projets connexes.',
           footer_text: '&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
         }

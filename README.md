@@ -9,6 +9,7 @@ Personal academic and professional webpage for Arcadi Llanza Carmona, Research &
 ## Related projects
 
 - [MPB — Moving Peaks Benchmark](https://alc1218.github.io/MPB/)
+- [Interactive Tales](https://alc1218.github.io/interactive_tales/)
 
 ---
 
