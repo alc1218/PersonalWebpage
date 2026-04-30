@@ -875,8 +875,184 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Responsive */
+    /* ─── Hamburger button ─── */
+    .hamburger-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: color .2s;
+      flex-shrink: 0;
+    }
+
+    .hamburger-btn:hover {
+      color: var(--accent);
+    }
+
+    /* ─── Mobile overlay menu ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 98;
+      padding: 6px 24px 18px;
+      flex-direction: column;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      color: var(--text);
+      font-size: .95rem;
+      font-weight: 500;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .mobile-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    /* ─── Publication stats bar ─── */
+    .pub-stats {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .pub-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: border-color .2s, transform .2s;
+      min-width: 100px;
+    }
+
+    .pub-stat:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .pub-stat-num {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+
+    .pub-stat-label {
+      font-size: .72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-top: 4px;
+      white-space: nowrap;
+    }
+
+    /* ─── Publication action row ─── */
+    .pub-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pub-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+      font-family: inherit;
+    }
+
+    .pub-action-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .pub-action-btn.copied {
+      border-color: #4ade80;
+      color: #4ade80;
+    }
+
+    /* ─── BibTeX panel ─── */
+    .bibtex-panel {
+      display: none;
+      margin-top: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Courier New', monospace;
+      font-size: .77rem;
+      color: var(--muted);
+      white-space: pre;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    .bibtex-panel.open {
+      display: block;
+    }
+
+    /* ─── Scroll fade-in ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── Responsive ─── */
     @media (max-width:700px) {
+      .hamburger-btn {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        display: none !important;
+      }
+
       .hero-grid {
         grid-template-columns: 1fr;
       }
@@ -891,8 +1067,22 @@
         grid-template-columns: 1fr;
       }
 
-      .nav-links {
-        display: none;
+      #experience > .container > [style] {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+      }
+
+      .pub-stats {
+        gap: 10px;
+      }
+
+      .pub-stat {
+        padding: 12px 16px;
+        min-width: 80px;
+      }
+
+      .pub-stat-num {
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -913,6 +1103,13 @@
           <a href="#connect" data-i18n="nav_connect">Connect</a>
           <a href="#projects" data-i18n="nav_projects">Projects</a>
         </div>
+        <button class="hamburger-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="16" height="2" rx="1" fill="currentColor"/>
+            <rect x="2" y="9" width="16" height="2" rx="1" fill="currentColor"/>
+            <rect x="2" y="14" width="16" height="2" rx="1" fill="currentColor"/>
+          </svg>
+        </button>
         <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
           <span id="themeIcon">🌙</span>
         </button>
@@ -975,6 +1172,16 @@
     </div>
   </nav>
 
+  <!-- Mobile nav menu -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+    <a href="#about" data-i18n="nav_about">About</a>
+    <a href="#research" data-i18n="nav_research">Research</a>
+    <a href="#experience" data-i18n="nav_experience">Experience</a>
+    <a href="#publications" data-i18n="nav_publications">Publications</a>
+    <a href="#connect" data-i18n="nav_connect">Connect</a>
+    <a href="#projects" data-i18n="nav_projects">Projects</a>
+  </div>
+
   <!-- Hero -->
   <section id="hero">
     <div class="container">
@@ -997,6 +1204,7 @@
               rel="noopener">ORCID</a>
             <a class="btn btn-ghost" href="https://scholar.google.com/citations?user=ck1JtTYAAAAJ&hl=en&authuser=1"
               target="_blank" rel="noopener">Google Scholar</a>
+            <a class="btn btn-ghost" href="mailto:alc1218+PW@gmail.com">✉ alc1218@gmail.com</a>
           </div>
         </div>
         <div class="avatar"><img src="photo.jpg" alt="Arcadi Llanza Carmona" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
@@ -1281,6 +1489,20 @@
   <section id="publications">
     <div class="container">
       <h2 data-i18n="sec_publications">Publications</h2>
+      <div class="pub-stats">
+        <a class="pub-stat" href="https://scholar.google.com/citations?user=ck1JtTYAAAAJ" target="_blank" rel="noopener">
+          <span class="pub-stat-num">70</span>
+          <span class="pub-stat-label" data-i18n="stat_citations">Citations</span>
+        </a>
+        <div class="pub-stat">
+          <span class="pub-stat-num">28</span>
+          <span class="pub-stat-label" data-i18n="stat_pubs">Publications</span>
+        </div>
+        <div class="pub-stat">
+          <span class="pub-stat-num">5</span>
+          <span class="pub-stat-label" data-i18n="stat_hindex">h-index</span>
+        </div>
+      </div>
       <div class="pub-filters">
         <button class="pub-filter active" data-filter="recent" data-i18n="filter_recent">5 Most Recent</button>
         <button class="pub-filter" data-filter="journal" data-i18n="filter_journal">Journal</button>
@@ -1430,7 +1652,9 @@
         { y: 2023, t: 'journal', title: 'Convolutional Neural Network Architecture Search Based on Fractal Decomposition Optimization Algorithm', meta: 'Expert Systems with Applications, Vol. 213, 118947 · Pergamon · 2023', authors: 'Souquet, L.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
         { y: 2023, t: 'conference', title: 'Inference Acceleration of Deep Learning Classifiers Based on RNN', meta: '2023 IEEE International Conference on Image Processing (ICIP) · pp. 2450-2454 · IEEE', authors: 'Keddous, F.E.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
         { y: 2023, t: 'preprint', title: 'Convolutional Neural Network Compression Based on Improved Fractal Decomposition Algorithm for Large Scale Optimization', meta: '2023', authors: '<strong>Llanza, A.</strong>; Keddous, F.E.; Shvai, N.; Nakib, A.' },
-        { y: 2022, t: 'preprint', title: 'Dynamic Camera Alignment Optimization Problem Based on Fractal Decomposition Based Algorithm', meta: 'arXiv:2209.11695 · 2022', authors: '<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
+        { y: 2023, t: 'conference', title: 'Evolutionary Data Distillation for Large Image Size Datasets', meta: 'International Conference on Optimization and Learning (OLA 2023) · 2023', authors: 'Shvai, N.; <strong>Llanza Carmona, A.</strong>; Nakib, A.' },
+        { y: 2023, t: 'preprint', title: 'Vision Transformers Inference Acceleration Based on Adaptive Layer Normalization', meta: 'SSRN 4445221 · 2023', authors: 'Nakib, A.; Keddous, F.E.; <strong>Llanza, A.</strong>; Shvai, N.' },
+        { y: 2022, t: 'preprint', title: 'Dynamic Camera Alignment Optimization Problem Based on Fractal Decomposition Based Algorithm', meta: 'arXiv:2209.11695 · 2022', authors: '<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.', url: 'https://arxiv.org/abs/2209.11695' },
         { y: 2022, t: 'conference', title: 'Investigating Fractal Decomposition Based Algorithm on Low-Dimensional Continuous Optimization Problems', meta: 'Metaheuristics International Conference (MIC 2022) · pp. 215-229 · Springer', authors: '<strong>Llanza, A.</strong>; Shvai, N.; Nakib, A.' },
         { y: 2022, t: 'conference', title: 'DEvS: Data Distillation Algorithm Based on Evolution Strategy', meta: 'GECCO Companion · pp. 292-295 · 2022', authors: 'Shvai, N.; <strong>Llanza, A.</strong>; Hasnat, A.; Nakib, A.' },
         { y: 2020, t: 'conference', title: "HyperFDA: A Bi-Level Optimization Approach to Neural Architecture Search and Hyperparameters Optimization via Fractal Decomposition-Based Algorithm", meta: 'GECCO Companion · pp. 155-156 · 2020', authors: 'Souquet, L.; Shvai, N.; <strong>Llanza, A.</strong>; Nakib, A.' },
@@ -1440,7 +1664,7 @@
         { y: 2019, t: 'conference', title: 'PixMap: Automatic License Plate Recognition with CNN Based on Saliency Maps', meta: 'Digital Optical Technologies 2019, Vol. 11062, pp. 92-104 · SPIE', authors: 'Sanogo, A.; <strong>Llanza, A.</strong>; Shvai, N.; et al.' },
         { y: 2019, t: 'conference', title: 'Application Guided Image Quality Estimation Based on Classification', meta: '2019 IEEE International Conference on Image Processing (ICIP) · pp. 549-553 · IEEE', authors: 'Hasnat, A.; Shvai, N.; Sanogo, A.; Khata, M.; <strong>Llanza, A.</strong>; et al.' },
         { y: 2019, t: 'conference', title: 'Novel Context-Aware Classification for Highly Accurate Automatic Toll Collection', meta: '2019 IEEE Intelligent Vehicles Symposium (IV) · pp. 1105-1110 · IEEE', authors: 'Khata, M.; Shvai, N.; Hasnat, A.; <strong>Llanza, A.</strong>; et al.' },
-        { y: 2015, t: 'conference', title: 'A Feature-Based Gaze Estimation Algorithm for Natural Light Scenarios', meta: 'Iberian Conference on Pattern Recognition and Image Analysis (IbPRIA) · pp. 569-576 · Springer · 2015', authors: 'Ferhat, O.; <strong>Llanza, A.</strong>; Vilarino, F.' },
+        { y: 2015, t: 'conference', title: 'A Feature-Based Gaze Estimation Algorithm for Natural Light Scenarios', meta: 'Iberian Conference on Pattern Recognition and Image Analysis (IbPRIA) · pp. 569-576 · Springer · 2015', authors: 'Ferhat, O.; <strong>Llanza, A.</strong>; Vilarino, F.', url: 'https://link.springer.com/chapter/10.1007/978-3-319-19390-8_64' },
         { y: 2015, t: 'conference', title: 'Gaze Interaction for Multi-Display Systems Using Natural Light Eye-Tracker', meta: 'SAGA Workshop, ETRA · 2015', authors: 'Ferhat, O.; <strong>Llanza, A.</strong>; Vilarino, F.' },
       ];
 
@@ -1499,6 +1723,8 @@
           lang_native: 'Native', lang_c1: 'Proficient (C1)', lang_b1: 'Independent (B1)', lang_b2: 'Independent (B2)', lang_a2: 'Basic (A2)',
           filter_recent: '5 Most Recent', filter_journal: 'Journal', filter_conf: 'Conference', filter_thesis: 'PhD Thesis', filter_preprint: 'Preprint',
           pub_expand: '+ Show all publications',
+          pub_read: 'Read paper', pub_bibtex: 'BibTeX', pub_bibtex_copied: 'Copied!',
+          stat_citations: 'Citations', stat_pubs: 'Publications', stat_hindex: 'h-index',
           badge_journal: 'Journal', badge_conf: 'Conference', badge_thesis: 'PhD Thesis', badge_preprint: 'Preprint',
           link_li_label: 'Professional', link_orcid_label: 'Research ID', link_gs_label: 'Citations', link_mpb_label: 'Project', link_tales_label: 'Side Project', link_kofi_label: 'Support',
           connect_desc: 'Find me on the following platforms or explore related projects.',
@@ -1553,6 +1779,8 @@
           lang_native: 'Nativo', lang_c1: 'Competente (C1)', lang_b1: 'Independiente (B1)', lang_b2: 'Independiente (B2)', lang_a2: 'Basico (A2)',
           filter_recent: '5 Mas Recientes', filter_journal: 'Revista', filter_conf: 'Conferencia', filter_thesis: 'Tesis Doctoral', filter_preprint: 'Preimpresion',
           pub_expand: '+ Mostrar todas las publicaciones',
+          pub_read: 'Leer articulo', pub_bibtex: 'BibTeX', pub_bibtex_copied: '¡Copiado!',
+          stat_citations: 'Citas', stat_pubs: 'Publicaciones', stat_hindex: 'indice-h',
           badge_journal: 'Revista', badge_conf: 'Conferencia', badge_thesis: 'Tesis Doctoral', badge_preprint: 'Preimpresion',
           link_li_label: 'Profesional', link_orcid_label: 'ID de Investigacion', link_gs_label: 'Citas', link_mpb_label: 'Proyecto', link_tales_label: 'Proyecto Paralelo', link_kofi_label: 'Apoyar',
           connect_desc: 'Encuentrame en las siguientes plataformas o explora proyectos relacionados.',
@@ -1607,6 +1835,8 @@
           lang_native: 'Natiu', lang_c1: 'Competent (C1)', lang_b1: 'Independent (B1)', lang_b2: 'Independent (B2)', lang_a2: 'Basic (A2)',
           filter_recent: '5 Mes Recents', filter_journal: 'Revista', filter_conf: 'Conferencia', filter_thesis: 'Tesi Doctoral', filter_preprint: 'Preprint',
           pub_expand: '+ Mostrar totes les publicacions',
+          pub_read: 'Llegir article', pub_bibtex: 'BibTeX', pub_bibtex_copied: 'Copiat!',
+          stat_citations: 'Citacions', stat_pubs: 'Publicacions', stat_hindex: 'h-index',
           badge_journal: 'Revista', badge_conf: 'Conferencia', badge_thesis: 'Tesi Doctoral', badge_preprint: 'Preprint',
           link_li_label: 'Professional', link_orcid_label: "ID d'Investigacio", link_gs_label: 'Citacions', link_mpb_label: 'Projecte', link_tales_label: 'Projecte Paral·lel', link_kofi_label: 'Donar suport',
           connect_desc: "Troba'm a les plataformes seguents o explora projectes relacionats.",
@@ -1661,12 +1891,42 @@
           lang_native: 'Natif', lang_c1: 'Maitrise (C1)', lang_b1: 'Independant (B1)', lang_b2: 'Independant (B2)', lang_a2: 'Basique (A2)',
           filter_recent: '5 Plus Recents', filter_journal: 'Revue', filter_conf: 'Conference', filter_thesis: 'These de Doctorat', filter_preprint: 'Prepublication',
           pub_expand: '+ Afficher toutes les publications',
+          pub_read: 'Lire l\'article', pub_bibtex: 'BibTeX', pub_bibtex_copied: 'Copie !',
+          stat_citations: 'Citations', stat_pubs: 'Publications', stat_hindex: 'h-index',
           badge_journal: 'Revue', badge_conf: 'Conference', badge_thesis: 'These de Doctorat', badge_preprint: 'Prepublication',
           link_li_label: 'Professionnel', link_orcid_label: 'ID de Recherche', link_gs_label: 'Citations', link_mpb_label: 'Projet', link_tales_label: 'Projet Annexe', link_kofi_label: 'Soutenir',
           connect_desc: 'Retrouvez-moi sur les plateformes suivantes ou explorez des projets connexes.',
           footer_text: '&copy; 2026 Arcadi Llanza Carmona &nbsp;&middot;&nbsp; <a href="https://orcid.org/0000-0001-5928-3189" target="_blank" rel="noopener">ORCID 0000-0001-5928-3189</a>',
         }
       };
+
+      /* ─── BibTeX helpers ─── */
+      function escHtml(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      function generateBibtex(p) {
+        var authorsClean = p.authors.replace(/<[^>]+>/g, '');
+        var firstAuthor = authorsClean.split(';')[0].trim();
+        var lastName = firstAuthor.split(',')[0].trim().split(/\s+/).pop();
+        var firstWord = p.title.split(/\s+/)[0].replace(/[^a-zA-Z]/g, '');
+        var key = lastName + p.y + firstWord;
+        var type = p.t === 'journal' ? '@article'
+          : p.t === 'thesis' ? '@phdthesis'
+          : p.t === 'preprint' ? '@misc'
+          : '@inproceedings';
+        return type + '{' + key + ',\n'
+          + '  author  = {' + authorsClean + '},\n'
+          + '  title   = {' + p.title + '},\n'
+          + '  year    = {' + p.y + '},\n'
+          + '  note    = {' + p.meta + '}\n'
+          + '}';
+      }
+
+      function pubUrl(p) {
+        if (p.url) return p.url;
+        return 'https://scholar.google.com/scholar?q=' + encodeURIComponent(p.title);
+      }
 
       /* ─── Render publications ─── */
       function renderPubs(filter, lang) {
@@ -1676,12 +1936,21 @@
         var items = isRecent ? PUBS.slice(0, 5)
           : filter === 'all' ? PUBS
             : PUBS.filter(function (p) { return p.t === filter; });
-        document.getElementById('pubList').innerHTML = items.map(function (p) {
-          return '<div class="pub-item">'
+        var readLabel = tl.pub_read || 'Read paper';
+        var bibLabel = tl.pub_bibtex || 'BibTeX';
+        document.getElementById('pubList').innerHTML = items.map(function (p, idx) {
+          var bibId = 'bib-' + idx + '-' + p.y;
+          var bibContent = escHtml(generateBibtex(p));
+          return '<div class="pub-item fade-in" style="transition-delay:' + (idx * 0.07) + 's">'
             + '<div class="pub-header"><span class="pub-title">' + p.title + '</span>'
             + '<span class="pub-badge ' + BADGE_CSS[p.t] + '">' + (badgeMap[p.t] || p.t) + '</span></div>'
             + '<div class="pub-meta">' + p.meta + '</div>'
             + '<div class="pub-authors">' + p.authors + '</div>'
+            + '<div class="pub-actions">'
+            + '<a class="pub-action-btn" href="' + pubUrl(p) + '" target="_blank" rel="noopener">&#128196; ' + readLabel + '</a>'
+            + '<button class="pub-action-btn bibtex-btn" data-bib="' + bibId + '">&lt;/&gt; ' + bibLabel + '</button>'
+            + '</div>'
+            + '<pre class="bibtex-panel" id="' + bibId + '">' + bibContent + '</pre>'
             + '</div>';
         }).join('');
         var btn = document.getElementById('pubExpandBtn');
@@ -1690,6 +1959,12 @@
           btn.textContent = tl.pub_expand || '+ Show all publications';
         } else {
           btn.style.display = 'none';
+        }
+        /* re-observe new pub-items for fade-in */
+        if (typeof fadeObserver !== 'undefined') {
+          document.querySelectorAll('#pubList .fade-in').forEach(function (el) {
+            fadeObserver.observe(el);
+          });
         }
       }
 
@@ -1813,6 +2088,78 @@
 
       /* ─── Init ─── */
       applyLang(detectLang());
+
+      /* ─── Hamburger menu ─── */
+      var menuBtn = document.getElementById('menuBtn');
+      var mobileMenu = document.getElementById('mobileMenu');
+      menuBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = mobileMenu.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', String(open));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          mobileMenu.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.addEventListener('click', function (e) {
+        if (!mobileMenu.contains(e.target) && e.target !== menuBtn) {
+          mobileMenu.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      /* ─── BibTeX toggle + copy (event delegation) ─── */
+      document.getElementById('pubList').addEventListener('click', function (e) {
+        var btn = e.target.closest('.bibtex-btn');
+        if (!btn) return;
+        var panelId = btn.dataset.bib;
+        var panel = document.getElementById(panelId);
+        if (!panel) return;
+        var opening = !panel.classList.contains('open');
+        /* close all other open panels */
+        document.querySelectorAll('.bibtex-panel.open').forEach(function (p) { p.classList.remove('open'); });
+        if (opening) {
+          panel.classList.add('open');
+          /* copy to clipboard */
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(panel.textContent).then(function () {
+              var origText = btn.innerHTML;
+              btn.textContent = '✓ ' + (T[currentLang].pub_bibtex_copied || 'Copied!');
+              btn.classList.add('copied');
+              setTimeout(function () {
+                btn.innerHTML = origText;
+                btn.classList.remove('copied');
+              }, 2200);
+            });
+          }
+        }
+      });
+
+      /* ─── Scroll fade-in (Intersection Observer) ─── */
+      var fadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      function observeFadeIns() {
+        document.querySelectorAll('.fade-in').forEach(function (el) {
+          fadeObserver.observe(el);
+        });
+      }
+
+      /* apply fade-in to static structural elements */
+      document.querySelectorAll(
+        '#about, #research, #experience, #languages, #connect, #projects, ' +
+        '.research-card, .timeline-item, .lang-card, .link-card, .info-card'
+      ).forEach(function (el) {
+        el.classList.add('fade-in');
+      });
+      observeFadeIns();
 
     }());
   </script>
